@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Счетчик проституток и наркоманов</string>
+
+    <string name="main_text_header">Счетчик\nпроституток\nи наркоманов</string>
+    <string name="list_item_text_date">Дата</string>
+
+    <string name="list_item_whore">Проститутка</string>
+    <string name="list_item_freak">Наркоман</string>
+
+</resources>

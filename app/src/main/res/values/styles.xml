@@ -10,7 +10,7 @@
 
     <style name="WFTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
-        <item name="colorPrimary">@color/color_green1</item>
+        <item name="colorPrimary">@color/color_gray_top</item>
 
     </style>
 

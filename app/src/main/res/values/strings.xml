@@ -2,9 +2,27 @@
     <string name="app_name">Счетчик проституток и наркоманов</string>
 
     <string name="main_text_header">Счетчик\nпроституток\nи наркоманов</string>
-    <string name="list_item_text_date">Дата</string>
+    <string name="list_item_text_date">Дата и время</string>
 
     <string name="list_item_whore">Проститутка</string>
     <string name="list_item_freak">Наркоман</string>
+
+    <string name="dude_fragment_save_button">Сохранить</string>
+    <string name="dude_fragment_cancel_button">Отмена</string>
+
+    <string name="spinner_prompt">Выбрать характеристику</string>
+    <string-array name="whores_string_array">
+        <item>Тоже мне фифа</item>
+        <item>Голоногая тьфу</item>
+        <item>Позор нашего двора</item>
+        <item>Здороваться не умеет</item>
+        <item>Малахольная какая-то</item>
+        <item>Гадюка вредная</item>
+        <item>Вся в наколках</item>
+    </string-array>
+
+    <string name="info_prompt">Напишите здесь дополнительную информацию, если пожелаете</string>
+
+
 
 </resources>

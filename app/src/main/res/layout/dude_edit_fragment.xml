@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="false"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <TextView
+        android:id="@+id/dude_fragment_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/dude_fragment_guide1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/dude_fragment_guide2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/dude_fragment_guide3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/dude_fragment_picture"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitStart"
+        android:layout_margin="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@id/dude_fragment_guide1"
+        app:layout_constraintTop_toTopOf="parent"
+
+        />
+
+    <TextView
+        android:id="@+id/dude_fragment_textview_header"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:paddingLeft="8dp"
+        android:maxLines="1"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintLeft_toLeftOf="@id/dude_fragment_guide1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Spinner
+        android:id="@+id/dude_fragment_spinner_property"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/color_gray_spinner"
+        app:layout_constraintLeft_toLeftOf="@id/dude_fragment_guide1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dude_fragment_textview_header"
+
+        />
+
+
+    <TextView
+        android:id="@+id/dude_fragment_prompt_info"
+        android:text="@string/info_prompt"
+
+        android:textSize="20sp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:layout_marginBottom="8dp"
+        android:alpha="0.3"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="@id/dude_fragment_guide1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dude_fragment_spinner_property"
+        app:layout_constraintBottom_toTopOf="@id/dude_fragment_cancel_button"
+        />
+
+
+    <EditText
+        android:id="@+id/dude_fragment_edittext_info"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+
+        android:layout_marginBottom="8dp"
+        android:gravity="top"
+        app:layout_constraintLeft_toLeftOf="@id/dude_fragment_guide1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dude_fragment_spinner_property"
+        app:layout_constraintBottom_toTopOf="@id/dude_fragment_cancel_button"
+        />
+
+    <Button
+        android:id="@+id/dude_fragment_cancel_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/dude_fragment_cancel_button"
+        android:layout_marginRight="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"
+        android:maxLines="1"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@id/dude_fragment_guide2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <Button
+        android:id="@+id/dude_fragment_save_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/dude_fragment_save_button"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:maxLines="1"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintLeft_toLeftOf="@id/dude_fragment_guide2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+
+</android.support.constraint.ConstraintLayout>

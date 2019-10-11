@@ -6,22 +6,22 @@ import java.util.Date;
 
 public class Util {
 
-    private static final DateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
-    private static final DateFormat timeFormatter = new SimpleDateFormat("HH:mm");
-
+    private static final DateFormat dateTimeFormatter = new SimpleDateFormat("dd.MM.yyyy - HH:mm");
 
     public static String formatDate(Date date) {
         if (date == null) {
             date = new Date();
         }
-        return dateFormatter.format(date);
+        return dateTimeFormatter.format(date);
     }
 
-    public static String formatTime(Date date) {
-        if (date == null) {
-            date = new Date();
+    public static String clearGaps(String input) {
+        if (input == null || input.isEmpty()) {
+            return "";
         }
-        return timeFormatter.format(date);
+
+        String result = input.trim().replaceAll("\\s{2,}", " ");
+        return result;
     }
 
 }

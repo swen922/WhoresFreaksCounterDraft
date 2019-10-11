@@ -5,6 +5,9 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="color_gray_top">#000033</color>
+    <color name="color_gray_spinner">#333333</color>
     <color name="color_gray_1">#999999</color>
     <color name="color_green1">#009933</color>
+    <color name="color_pink1">#FFCCCC</color>
+    <color name="color_sky1">#CCCCFF</color>
 </resources>

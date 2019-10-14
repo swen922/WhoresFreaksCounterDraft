@@ -7,8 +7,11 @@
     <string name="list_item_whore">Проститутка</string>
     <string name="list_item_freak">Наркоман</string>
 
-    <string name="dude_fragment_save_button">Сохранить</string>
-    <string name="dude_fragment_cancel_button">Отмена</string>
+    <string name="button_save">Сохранить</string>
+    <string name="button_cancel">Отмена</string>
+    <string name="button_delete">Удалить</string>
+
+
 
     <string name="spinner_prompt">Выбрать характеристику</string>
     <string-array name="whores_string_array">
@@ -22,6 +25,12 @@
     </string-array>
 
     <string name="info_prompt">Напишите здесь дополнительную информацию, если пожелаете</string>
+
+    <string name="delete_alert">Удалить из списка пункт</string>
+    <string name="delete_success">Успешно удален из списка пункт</string>
+    <string name="delete_fail">Не удалось удалить из списка пункт</string>
+
+
 
 
 

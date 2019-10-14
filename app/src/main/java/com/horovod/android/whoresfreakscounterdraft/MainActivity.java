@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -21,10 +22,12 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView listView;
     private ArrayAdapter<Dude> adapter;
-    private List<Dude> listItems;
     private BroadcastReceiver receiver;
+    private BroadcastReceiver deleteReceiver;
     FragmentManager fragmentManager;
 
+
+    // TODO видимо, в концепции андроида правильнее читать из XML каждый раз (?)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,28 +37,24 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
 
         listView = findViewById(R.id.listview_main);
-        listItems = new ArrayList<>();
-        adapter = new DudeAdapter(this, R.layout.list_item, listItems, fragmentManager);
+        //listItems = new ArrayList<>();
+        adapter = new DudeAdapter(this, R.layout.list_item, Data.getDudes(), fragmentManager);
+
+        for (int i = 0; i < 30; i++) {
+            Date date1 = new Date();
+            double tmp = Math.random();
+            int a = (int) (tmp * 10);
+            int b = a % 2;
+            if (b == 0) {
+                Data.addDudeLast(new Dude(DudeType.WHORE, date1, "Описание " + (i + 1)));
+            }
+            else {
+                Data.addDudeLast(new Dude(DudeType.FREAK, date1, "Описание " + (i + 1)));
+            }
+        }
+
+        //listItems.addAll(Data.getDudes().values());
         listView.setAdapter(adapter);
-
-        Date date1 = new Date();
-        Data.putDude(1, new Dude(DudeType.WHORE, 1, date1, "Описание 1"));
-        Date date2 = new Date();
-        Data.putDude(2, new Dude(DudeType.FREAK, 2, date2, "Описание 2"));
-        Date date3 = new Date();
-        Data.putDude(5, new Dude(DudeType.FREAK, 5, date3, ""));
-        Date date4 = new Date();
-        Data.putDude(12, new Dude(DudeType.WHORE, 12, date4, "Описание 4"));
-        Date date5 = new Date();
-        Data.putDude(25, new Dude(DudeType.WHORE, 25, date5, "Описание 5"));
-        Date date6 = new Date();
-        Data.putDude(130, new Dude(DudeType.FREAK, 130, date6, ""));
-        Date date7 = new Date();
-        Data.putDude(131, new Dude(DudeType.WHORE, 131, date7, null));
-        Date date8 = new Date();
-        Data.putDude(132, new Dude(DudeType.WHORE, 132, date8, "Описание 8"));
-
-        listItems.addAll(Data.getDudes().values());
         adapter.notifyDataSetChanged();
 
         receiver = new BroadcastReceiver() {
@@ -67,32 +66,45 @@ public class MainActivity extends AppCompatActivity {
                 if (id >= 0) {
                     Dude dude = Data.getDude(id);
                     String newDescription = intent.getStringExtra(Data.KEY_DESCRIPTION);
-                    if (newDescription != null && !newDescription.isEmpty()) {
-                        dude.setDescription(newDescription);
-                        Data.putDude(id, dude);
-                        listItems.clear();
-                        listItems.addAll(Data.getDudes().values());
-                        listItems.sort(new Comparator<Dude>() {
-                            @Override
-                            public int compare(Dude o1, Dude o2) {
-                                int o1id = o1.getIdNumber();
-                                int o2id = o2.getIdNumber();
-                                return o1id > o2id ? 1 : o1id < o2id ? -1 : 0;
-                            }
-                        });
-                        adapter.notifyDataSetChanged();
+                    dude.setDescription(newDescription);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        };
+        deleteReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                int id = intent.getIntExtra(Data.KEY_IDNUMBER, -1);
+
+                if (id >= 0) {
+                    boolean result = Data.removeDude(id);
+                    if (result) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.delete_success) + " " + (id + 1), Toast.LENGTH_LONG).show();
                     }
+                    else {
+                        Toast.makeText(getApplicationContext(), getString(R.string.delete_fail) + " " + (id + 1), Toast.LENGTH_LONG).show();
+                    }
+                    adapter.notifyDataSetChanged();
+
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.delete_fail) + " " + (id + 1), Toast.LENGTH_LONG).show();
                 }
             }
         };
         IntentFilter intentFilter = new IntentFilter(Data.KEY_UPDATE_DUDES);
         registerReceiver(receiver, intentFilter);
+        IntentFilter intentFilterDelete = new IntentFilter(Data.KEY_DELETE_DUDE);
+        registerReceiver(deleteReceiver, intentFilterDelete);
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+        unregisterReceiver(deleteReceiver);
     }
 
     // override OnBackPressed() for to close DudeFragment first, if it's opened now

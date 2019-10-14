@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -29,26 +31,22 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         //super.getView(position, convertView, parent);
 
         DudeAdapter.ViewHolder viewHolder;
         Dude dude = getItem(position);
-        final int idNumber = dude.getIdNumber();
-        String idString = String.valueOf(dude.getIdNumber());
-        String dateString = dude.getDateString();
         String descr = dude.getDescription();
-
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
             viewHolder = new DudeAdapter.ViewHolder();
             convertView = inflater.inflate(resourceID, parent, false);
-            viewHolder.idNumberTextView = (TextView) convertView.findViewById(R.id.list_item_textView_idnumber);
+            viewHolder.positionNumberTextView = (TextView) convertView.findViewById(R.id.list_item_textView_idnumber);
             viewHolder.descriptionHeaderTextView = (TextView) convertView.findViewById(R.id.list_item_textView_description_header);
             viewHolder.descriptionTextView = (TextView) convertView.findViewById(R.id.list_item_textView_description);
             viewHolder.gradientDescription = (TextView) convertView.findViewById(R.id.list_item_gradient_description);
-            viewHolder.colorDescriptionTop = (TextView) convertView.findViewById(R.id.list_item_color_description_top);
+            viewHolder.closeCrossImageView = (ImageView) convertView.findViewById(R.id.list_item_close_cross);
             convertView.setTag(viewHolder);
         }
         else {
@@ -56,17 +54,15 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
         }
 
         if (dude.getDudeType().equals(DudeType.WHORE)) {
-            viewHolder.gradientDescription.setBackground(context.getResources().getDrawable(R.drawable.back_gradient_whore1));
-            viewHolder.colorDescriptionTop.setBackgroundColor(context.getResources().getColor(R.color.color_pink1));
+            viewHolder.gradientDescription.setBackground(context.getResources().getDrawable(R.drawable.background_whore1));
             viewHolder.descriptionHeaderTextView.setText(context.getResources().getString(R.string.list_item_whore));
         }
         else {
-            viewHolder.gradientDescription.setBackground(context.getResources().getDrawable(R.drawable.back_gradient_freak1));
-            viewHolder.colorDescriptionTop.setBackgroundColor(context.getResources().getColor(R.color.color_sky1));
+            viewHolder.gradientDescription.setBackground(context.getResources().getDrawable(R.drawable.background_freak1));
             viewHolder.descriptionHeaderTextView.setText(context.getResources().getString(R.string.list_item_freak));
         }
 
-        viewHolder.idNumberTextView.setText(idString);
+        viewHolder.positionNumberTextView.setText(String.valueOf(position + 1));
         viewHolder.descriptionTextView.setText(descr);
 
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +71,7 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 DudeFragment dudeFragment = new DudeFragment();
                 Bundle args = new Bundle();
-                args.putInt(Data.KEY_ARGS_INDEX, idNumber);
+                args.putInt(Data.KEY_IDNUMBER, position);
                 dudeFragment.setArguments(args);
 
                 int count = fragmentManager.getBackStackEntryCount();
@@ -91,17 +87,30 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
             }
         });
 
+        viewHolder.closeCrossImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialogDelete dialog = new AlertDialogDelete();
+                dialog.setCancelable(false);
+                Bundle args = new Bundle();
+                args.putInt(Data.KEY_IDNUMBER, position);
+                dialog.setArguments(args);
+                dialog.show(fragmentManager, Data.KEY_DELETE_DUDE);
+
+            }
+        });
+
         return convertView;
 
     }
 
 
     public class ViewHolder {
-        TextView idNumberTextView;
-        TextView dateTextView;
+        TextView positionNumberTextView;
+        ImageView closeCrossImageView;
         TextView descriptionHeaderTextView;
         TextView descriptionTextView;
         TextView gradientDescription;
-        TextView colorDescriptionTop;
     }
 }

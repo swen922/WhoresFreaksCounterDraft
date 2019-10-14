@@ -3,20 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="120dp"
+    android:padding="4dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-
-
-    <TextView
-        android:id="@+id/list_item_gradient_background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/back_gradient4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
 
     <android.support.constraint.Guideline
         android:id="@+id/list_item__guide1"
@@ -59,9 +48,7 @@
         android:id="@+id/list_item_gradient_idnumber"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:background="@drawable/back_gradient4"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="2dp"
+        android:background="@drawable/back_gradient2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/list_item__guide1"
@@ -93,24 +80,9 @@
         android:id="@+id/list_item_gradient_description"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:background="@drawable/back_gradient_whore1"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="4dp"
+        android:background="@drawable/background_whore1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/list_item__guide1"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-
-    <TextView
-        android:id="@+id/list_item_color_description_top"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:background="@color/color_pink1"
-        android:alpha="0.4"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="4dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="@+id/list_item__guide1"
         app:layout_constraintEnd_toEndOf="parent"
         />
@@ -127,7 +99,19 @@
         android:layout_marginRight="8dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="@+id/list_item__guide1"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/list_item_close_cross"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_close_black_24dp"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="4dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/list_item__guide_horiz1"
         />
 
     <TextView
@@ -138,7 +122,7 @@
         android:layout_marginRight="8dp"
         app:layout_constraintTop_toBottomOf="@id/list_item_textView_description_header"
         app:layout_constraintStart_toStartOf="@+id/list_item__guide1"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         />
 
 

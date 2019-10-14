@@ -1,43 +1,73 @@
 package com.horovod.android.whoresfreakscounterdraft;
 
+import android.widget.ArrayAdapter;
+
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class Data {
 
-    private static volatile int idNumber = 0;
-    private static Map<Integer, Dude>  dudes = new TreeMap<>();
-    public static final String KEY_ARGS_INDEX = "KEY_ARGS_INDEX";
+    private static LinkedList<Dude> dudes = new LinkedList<>();
+
     public static final String KEY_UPDATE_DUDES = "whoresfreakscounterdraft_KEY_UPDATE_DUDES";
+    public static final String KEY_DELETE_DUDE = "whoresfreakscounterdraft_KEY_DELETE_DUDE";
     public static final String KEY_IDNUMBER = "KEY_IDNUMBER";
     public static final String KEY_DESCRIPTION = "KEY_DESCRIPTION";
     public static DudeFragment dudeFragment;
 
-    public static Dude getDude(int idNumber) {
-        if (dudes.containsKey(idNumber)) {
-            return dudes.get(idNumber);
+    public static Dude getDude(int index) {
+        if (dudes.size() > index) {
+            return dudes.get(index);
         }
         return null;
     }
 
-    public static void putDude(int idNumber, Dude dude) {
-        dudes.put(idNumber, dude);
+    public static Dude getDudeFirst() {
+        if (!dudes.isEmpty()) {
+            return dudes.getFirst();
+        }
+        return null;
     }
 
-    public static Map<Integer, Dude> getDudes() {
-        return new HashMap<>(dudes);
+    public static Dude getDudeLast() {
+        if (!dudes.isEmpty()) {
+            return dudes.getLast();
+        }
+        return null;
     }
 
-    public static void setDudes(Map<Integer, Dude> newdudes) {
-        dudes = newdudes;
+    public static void addDude(Dude dude) {
+        dudes.add(dude);
     }
 
-    public static int getIdNumber() {
-        return idNumber;
+    public static void addDudeFirst(Dude dude) {
+        dudes.addFirst(dude);
     }
 
-    public static void setIdNumber(int newIDNumber) {
-        idNumber = newIDNumber;
+    public static void addDudeLast(Dude dude) {
+        dudes.addLast(dude);
     }
+
+    public static boolean removeDude(int index) {
+        if (dudes.size() > index) {
+            dudes.remove(index);
+            return true;
+        }
+        return false;
+    }
+
+
+    public static List<Dude> getDudes() {
+        return dudes;
+    }
+
+    public static void setDudes(List<Dude> newDudes) {
+        Data.dudes = new LinkedList<>(newDudes);
+    }
+
+
+
 }

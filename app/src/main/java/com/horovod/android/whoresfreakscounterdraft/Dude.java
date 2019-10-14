@@ -5,21 +5,18 @@ import java.util.Date;
 public class Dude {
 
     private DudeType dudeType;
-    private int idNumber;
     private String dateString;
     private String description;
 
-    public Dude(DudeType dudeType, int idNumber, String dateString, String description) {
+    public Dude(DudeType dudeType, String dateString, String description) {
         this.dudeType = dudeType;
-        this.idNumber = idNumber;
         this.dateString = dateString;
         this.description = description;
     }
 
     // Constructor with Date formatting to two Strings
-    public Dude(DudeType dudeType, int idNumber, Date date, String description) {
+    public Dude(DudeType dudeType, Date date, String description) {
         this.dudeType = dudeType;
-        this.idNumber = idNumber;
         this.dateString = Util.formatDate(date);
         this.description = description;
     }
@@ -28,9 +25,9 @@ public class Dude {
         return dudeType;
     }
 
-    public int getIdNumber() {
+    /*public int getIdNumber() {
         return idNumber;
-    }
+    }*/
 
     public String getDateString() {
         return dateString;

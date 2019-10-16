@@ -13,9 +13,11 @@
     <color name="freak_base_color">#D1C4E9</color>
     <color name="freak_dark_color">#7E57C2</color>
 
-    <color name="gray_accent_light">#607D8B</color>
+    <color name="gray_accent_light">#90A4AE</color>
     <color name="gray_accent_base">#455A64</color>
     <color name="gray_accent_dark">#263238</color>
+
+    <color name="yellow_selection">#FFFF8D</color>
 
 
     <color name="color_gray_top">#000033</color>

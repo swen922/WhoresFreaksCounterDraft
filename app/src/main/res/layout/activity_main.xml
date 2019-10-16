@@ -9,36 +9,194 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textview_header"
+    <android.support.constraint.Guideline
+        android:id="@+id/main_vertical_guide1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/main_text_header"
-        android:textSize="28sp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.44"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/main_vertical_guide2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.56"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/main_horizontal_guide1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/main_horizontal_guide2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.23"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/main_horizontal_guide3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.04"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/main_horizontal_guide4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.22"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/main_horizontal_guide5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.18"
+        />
+
+
+    <TextView
+        android:id="@+id/textview_counter_freaks_header"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/list_item_freak2"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:textAllCaps="true"
-        android:textAlignment="center"
-        android:alpha="0.1"
+        android:gravity="right"
+        android:alpha="0.6"
+        android:maxLines="1"
+        app:autoSizeTextType="uniform"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/listview_main"
+        app:layout_constraintRight_toRightOf="@id/main_vertical_guide1"
+        app:layout_constraintBottom_toBottomOf="@id/main_horizontal_guide3"
         />
+
+    <TextView
+        android:id="@+id/textview_counter_whores_header"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/list_item_whore2"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:gravity="left"
+        android:alpha="0.6"
+        android:maxLines="1"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/main_vertical_guide2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/main_horizontal_guide3"
+        />
+
+    <TextView
+        android:id="@+id/textview_counter_freaks"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="3"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:gravity="top|right"
+        android:maxLines="1"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@id/main_vertical_guide1"
+        app:layout_constraintBottom_toTopOf="@id/main_horizontal_guide2"
+        />
+
+    <TextView
+        android:id="@+id/textview_counter_whores"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="21"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:gravity="top|left"
+        android:maxLines="1"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/main_vertical_guide2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/main_horizontal_guide2"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        android:text=":"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:gravity="top|center"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintLeft_toLeftOf="@id/main_vertical_guide1"
+        app:layout_constraintRight_toRightOf="@id/main_vertical_guide2"
+        app:layout_constraintTop_toTopOf="@+id/main_horizontal_guide3"
+        app:layout_constraintBottom_toBottomOf="@id/main_horizontal_guide5"
+        />
+
+
+    <TextView
+        android:id="@+id/textview_add_freak"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/add_freak1"
+        android:textColor="@color/yellow_selection"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:gravity="right"
+        android:maxLines="2"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@id/main_vertical_guide1"
+        app:layout_constraintTop_toTopOf="@id/main_horizontal_guide4"
+        app:layout_constraintBottom_toBottomOf="@id/main_horizontal_guide1"
+        />
+
+
+    <TextView
+        android:id="@+id/textview_add_whore"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/add_whore1"
+        android:textColor="@color/yellow_selection"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:gravity="left"
+        android:maxLines="2"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintLeft_toLeftOf="@id/main_vertical_guide2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/main_horizontal_guide4"
+        app:layout_constraintBottom_toBottomOf="@id/main_horizontal_guide1"
+        />
+
 
     <ListView
         android:id="@+id/listview_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-
-        app:layout_constraintTop_toBottomOf="@+id/textview_header"
+        app:layout_constraintTop_toBottomOf="@+id/main_horizontal_guide1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-
         />
-
-
 
 </android.support.constraint.ConstraintLayout>

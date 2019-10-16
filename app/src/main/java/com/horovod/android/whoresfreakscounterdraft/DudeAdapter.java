@@ -36,6 +36,7 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
 
         DudeAdapter.ViewHolder viewHolder;
         Dude dude = getItem(position);
+        String spinnerString = dude.getSpinnerSelected();
         String descr = dude.getDescription();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -43,7 +44,7 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
             viewHolder = new DudeAdapter.ViewHolder();
             convertView = inflater.inflate(resourceID, parent, false);
             viewHolder.positionNumberTextView = (TextView) convertView.findViewById(R.id.list_item_textView_idnumber);
-            viewHolder.descriptionHeaderTextView = (TextView) convertView.findViewById(R.id.list_item_textView_description_header);
+            viewHolder.headerTextView = (TextView) convertView.findViewById(R.id.list_item_textView_description_header);
             viewHolder.descriptionTextView = (TextView) convertView.findViewById(R.id.list_item_textView_description);
             viewHolder.gradientDescription = (TextView) convertView.findViewById(R.id.list_item_gradient_description);
             viewHolder.closeCrossImageView = (ImageView) convertView.findViewById(R.id.list_item_close_cross);
@@ -55,15 +56,15 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
 
         if (dude.getDudeType().equals(DudeType.WHORE)) {
             viewHolder.gradientDescription.setBackground(context.getResources().getDrawable(R.drawable.background_whore1));
-            viewHolder.descriptionHeaderTextView.setText(context.getResources().getString(R.string.list_item_whore));
+            viewHolder.headerTextView.setText(context.getResources().getString(R.string.list_item_whore));
         }
         else {
             viewHolder.gradientDescription.setBackground(context.getResources().getDrawable(R.drawable.background_freak1));
-            viewHolder.descriptionHeaderTextView.setText(context.getResources().getString(R.string.list_item_freak));
+            viewHolder.headerTextView.setText(context.getResources().getString(R.string.list_item_freak));
         }
 
         viewHolder.positionNumberTextView.setText(String.valueOf(position + 1));
-        viewHolder.descriptionTextView.setText(descr);
+        viewHolder.descriptionTextView.setText(spinnerString + "\n" + descr);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +102,8 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
             }
         });
 
+        //Log.i("LOGGGGINGGG |||| ", viewHolder.headerTextView.getText().toString() + " - " + viewHolder.positionNumberTextView.getText().toString());
+
         return convertView;
 
     }
@@ -109,7 +112,7 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
     public class ViewHolder {
         TextView positionNumberTextView;
         ImageView closeCrossImageView;
-        TextView descriptionHeaderTextView;
+        TextView headerTextView;
         TextView descriptionTextView;
         TextView gradientDescription;
     }

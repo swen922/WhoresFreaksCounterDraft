@@ -7,27 +7,26 @@ public class Dude {
     private DudeType dudeType;
     private String dateString;
     private String description;
+    private String spinnerSelected;
 
-    public Dude(DudeType dudeType, String dateString, String description) {
+    public Dude(DudeType dudeType, String dateString, String description, String spinner) {
         this.dudeType = dudeType;
         this.dateString = dateString;
         this.description = description;
+        this.spinnerSelected = spinner;
     }
 
     // Constructor with Date formatting to two Strings
-    public Dude(DudeType dudeType, Date date, String description) {
+    public Dude(DudeType dudeType, Date date, String description, String spinner) {
         this.dudeType = dudeType;
         this.dateString = Util.formatDate(date);
         this.description = description;
+        this.spinnerSelected = spinner;
     }
 
     public DudeType getDudeType() {
         return dudeType;
     }
-
-    /*public int getIdNumber() {
-        return idNumber;
-    }*/
 
     public String getDateString() {
         return dateString;
@@ -41,4 +40,11 @@ public class Dude {
         this.description = description;
     }
 
+    public String getSpinnerSelected() {
+        return spinnerSelected;
+    }
+
+    public void setSpinnerSelected(String spinnerSelected) {
+        this.spinnerSelected = spinnerSelected;
+    }
 }

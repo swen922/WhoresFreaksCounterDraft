@@ -25,12 +25,13 @@ import java.util.ArrayList;
 
 public class DudeFragment extends Fragment {
 
-    private DudeFragment dudeFragment;
-
     private TextView background;
     //private ImageView dudeImageView;
+    private TextView headerColor;
     private TextView headerTextView;
+    private TextView indexTextView;
     private Spinner propertySpinner;
+    private TextView dateTextView;
     private TextView promptTextView;
     private EditText descriptionEditText;
     private Button cancelButton;
@@ -44,20 +45,15 @@ public class DudeFragment extends Fragment {
         //return super.onCreateView(inflater, container, savedInstanceState);
 
         View rootView = inflater.inflate(R.layout.dude_edit_fragment, container, false);
-        dudeFragment = this;
         Data.dudeFragment = this;
-
-        /*container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // nothing to do - blocking clicks on ListView through our DudeFragment
-            }
-        });*/
 
         background = rootView.findViewById(R.id.dude_fragment_background);
         //dudeImageView = rootView.findViewById(R.id.dude_fragment_picture);
+        headerColor = rootView.findViewById(R.id.dude_fragment_color_header);
         headerTextView = rootView.findViewById(R.id.dude_fragment_textview_header);
+        indexTextView = rootView.findViewById(R.id.dude_fragment_textview_index);
         propertySpinner = rootView.findViewById(R.id.dude_fragment_spinner_property);
+        dateTextView = rootView.findViewById(R.id.dude_fragment_date_textview);
         promptTextView = rootView.findViewById(R.id.dude_fragment_prompt_info);
         descriptionEditText = rootView.findViewById(R.id.dude_fragment_edittext_info);
         cancelButton = rootView.findViewById(R.id.dude_fragment_cancel_button);
@@ -80,19 +76,28 @@ public class DudeFragment extends Fragment {
             }
         }
 
+        String[] spinnerItems;
+
         if (myDude != null) {
             if (myDude.getDudeType().equals(DudeType.WHORE)) {
                 headerTextView.setText(getResources().getString(R.string.list_item_whore));
-                headerTextView.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_whore));
-                background.setBackground(getResources().getDrawable(R.drawable.background_fragment_whore));
+                headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_whore));
+                indexTextView.setTextColor(getResources().getColor(R.color.whore_dark_color));
+                spinnerItems = getResources().getStringArray(R.array.whores_string_array);
+                //background.setBackground(getResources().getDrawable(R.drawable.background_fragment_whore));
             }
             else {
                 headerTextView.setText(getResources().getString(R.string.list_item_freak));
-                headerTextView.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_freak));
-                background.setBackground(getResources().getDrawable(R.drawable.background_fragment_freak));
+                headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_freak));
+                indexTextView.setTextColor(getResources().getColor(R.color.freak_dark_color));
+                spinnerItems = getResources().getStringArray(R.array.freaks_string_array);
+                //background.setBackground(getResources().getDrawable(R.drawable.background_fragment_freak));
             }
 
-            String[] spinnerItems = getResources().getStringArray(R.array.whores_string_array);
+            indexTextView.setText(String.valueOf(dudeID + 1));
+            String dt = getString(R.string.dude_date_time) + " " + myDude.getDateString();
+            dateTextView.setText(dt);
+
             ArrayAdapter<String> adapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row, R.id.spinner_row_textview, spinnerItems, getLayoutInflater());
             propertySpinner.setAdapter(adapter);
 
@@ -139,7 +144,7 @@ public class DudeFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     descriptionEditText.setText(myDude.getDescription());
-                    getActivity().getSupportFragmentManager().beginTransaction().remove(dudeFragment).commit();
+                    getActivity().getSupportFragmentManager().beginTransaction().remove(Data.dudeFragment).commit();
                     closeKeyboard();
                 }
             });
@@ -149,18 +154,21 @@ public class DudeFragment extends Fragment {
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String input = descriptionEditText.getText().toString();
+                    String inputDescription = descriptionEditText.getText().toString();
+                    inputDescription = Util.clearGaps(inputDescription);
+                    String inputSpinner = propertySpinner.getSelectedItem().toString();
 
-                    input = Util.clearGaps(input);
+                    myDude.setDescription(inputDescription);
+                    descriptionEditText.setText(inputDescription);
+                    myDude.setSpinnerSelected(inputSpinner);
 
-                    myDude.setDescription(input);
-                    descriptionEditText.setText(input);
 
-                    Intent intent = new Intent(Data.KEY_UPDATE_DUDES);
+                    Intent intent = new Intent(Data.KEY_UPDATE_DUDE);
                     intent.putExtra(Data.KEY_IDNUMBER, dudeIDfin);
-                    intent.putExtra(Data.KEY_DESCRIPTION, input);
+                    intent.putExtra(Data.KEY_DESCRIPTION, inputDescription);
+                    intent.putExtra(Data.KEY_SPINNER, inputSpinner);
                     getActivity().sendBroadcast(intent);
-                    getActivity().getSupportFragmentManager().beginTransaction().remove(dudeFragment).commit();
+                    getActivity().getSupportFragmentManager().beginTransaction().remove(Data.dudeFragment).commit();
                     closeKeyboard();
                 }
             });

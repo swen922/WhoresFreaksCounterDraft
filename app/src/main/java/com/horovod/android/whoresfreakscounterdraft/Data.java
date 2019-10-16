@@ -2,6 +2,7 @@ package com.horovod.android.whoresfreakscounterdraft;
 
 import android.widget.ArrayAdapter;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,11 +13,22 @@ public class Data {
 
     private static LinkedList<Dude> dudes = new LinkedList<>();
 
-    public static final String KEY_UPDATE_DUDES = "whoresfreakscounterdraft_KEY_UPDATE_DUDES";
+    public static final String KEY_CREATE_DUDE = "whoresfreakscounterdraft_KEY_CREATE_DUDE";
+    public static final String KEY_UPDATE_DUDE = "whoresfreakscounterdraft_KEY_UPDATE_DUDE";
     public static final String KEY_DELETE_DUDE = "whoresfreakscounterdraft_KEY_DELETE_DUDE";
     public static final String KEY_IDNUMBER = "KEY_IDNUMBER";
     public static final String KEY_DESCRIPTION = "KEY_DESCRIPTION";
+    public static final String KEY_SPINNER = "KEY_SPINNER";
+    public static final String KEY_DUDETYPE = "KEY_DUDETYPE";
+
     public static DudeFragment dudeFragment;
+
+
+    public static void createDude(DudeType dt, String description, String spinner) {
+        Dude dude = new Dude(dt, new Date(), description, spinner);
+
+    }
+
 
     public static Dude getDude(int index) {
         if (dudes.size() > index) {

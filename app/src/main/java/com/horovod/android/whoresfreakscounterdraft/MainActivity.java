@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView listView;
     private ArrayAdapter<Dude> adapter;
+    private BroadcastReceiver createReceiver;
     private BroadcastReceiver receiver;
     private BroadcastReceiver deleteReceiver;
     FragmentManager fragmentManager;
@@ -40,22 +41,30 @@ public class MainActivity extends AppCompatActivity {
         //listItems = new ArrayList<>();
         adapter = new DudeAdapter(this, R.layout.list_item, Data.getDudes(), fragmentManager);
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 20; i++) {
             Date date1 = new Date();
             double tmp = Math.random();
             int a = (int) (tmp * 10);
             int b = a % 2;
             if (b == 0) {
-                Data.addDudeLast(new Dude(DudeType.WHORE, date1, "Описание " + (i + 1)));
+                Data.addDudeLast(new Dude(DudeType.WHORE, date1, "Описание " + (i + 1), getResources().getStringArray(R.array.whores_string_array)[0]));
             }
             else {
-                Data.addDudeLast(new Dude(DudeType.FREAK, date1, "Описание " + (i + 1)));
+                Data.addDudeLast(new Dude(DudeType.FREAK, date1, "Описание " + (i + 1), getResources().getStringArray(R.array.freaks_string_array)[0]));
             }
         }
 
-        //listItems.addAll(Data.getDudes().values());
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        createReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String descr = intent.getStringExtra(Data.KEY_DESCRIPTION);
+                String spinner = intent.getStringExtra(Data.KEY_SPINNER);
+
+            }
+        };
 
         receiver = new BroadcastReceiver() {
             @Override
@@ -66,7 +75,9 @@ public class MainActivity extends AppCompatActivity {
                 if (id >= 0) {
                     Dude dude = Data.getDude(id);
                     String newDescription = intent.getStringExtra(Data.KEY_DESCRIPTION);
+                    String newSpinner = intent.getStringExtra(Data.KEY_SPINNER);
                     dude.setDescription(newDescription);
+                    dude.setSpinnerSelected(newSpinner);
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -93,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-        IntentFilter intentFilter = new IntentFilter(Data.KEY_UPDATE_DUDES);
+        IntentFilter intentFilter = new IntentFilter(Data.KEY_UPDATE_DUDE);
         registerReceiver(receiver, intentFilter);
         IntentFilter intentFilterDelete = new IntentFilter(Data.KEY_DELETE_DUDE);
         registerReceiver(deleteReceiver, intentFilterDelete);

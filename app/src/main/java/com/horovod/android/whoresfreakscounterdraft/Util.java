@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Util {
 
-    private static final DateFormat dateTimeFormatter = new SimpleDateFormat("dd.MM.yyyy - HH:mm");
+    private static final DateFormat dateTimeFormatter = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
 
     public static String formatDate(Date date) {
         if (date == null) {

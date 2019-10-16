@@ -3,11 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="false"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/dude_fragment_background"
+        android:id="@+id/dude_create_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background_fragment"
@@ -18,25 +17,15 @@
         />
 
     <android.support.constraint.Guideline
-        android:id="@+id/dude_fragment_guide_vertical_50"
+        android:id="@+id/dude_create_guide_vertical_50"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5"
         />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/dude_fragment_guide_vertical_70"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.7"
-        />
-
-
-
     <TextView
-        android:id="@+id/dude_fragment_color_header"
+        android:id="@+id/dude_create_color_header"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:background="@drawable/background_fragment_top_whore"
@@ -46,12 +35,14 @@
         />
 
     <TextView
-        android:id="@+id/dude_fragment_textview_header"
+        android:id="@+id/dude_create_textview_header"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:text="@string/add_whore2"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         android:maxLines="1"
         app:autoSizeTextType="uniform"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -60,63 +51,48 @@
         />
 
     <TextView
-        android:id="@+id/dude_fragment_textview_index"
-        android:layout_width="60dp"
-        android:layout_height="34dp"
-        android:background="@drawable/background_fragment_index"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:id="@+id/dude_create_spinner_prompt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/spinner_prompt"
+        android:layout_marginTop="12dp"
+        android:paddingLeft="12dp"
         android:maxLines="1"
-        app:autoSizeTextType="uniform"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dude_create_textview_header"
         />
 
+
     <Spinner
-        android:id="@+id/dude_fragment_spinner_property"
+        android:id="@+id/dude_create_spinner_property"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/gray_accent_base"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dude_fragment_textview_header"
+        app:layout_constraintTop_toBottomOf="@id/dude_create_spinner_prompt"
         />
 
 
     <TextView
-        android:id="@+id/dude_fragment_prompt_info"
+        android:id="@+id/dude_create_prompt_info"
         android:text="@string/info_prompt"
         android:textSize="20sp"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        android:alpha="0.3"
+        android:alpha="0.5"
         android:gravity="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dude_fragment_spinner_property"
-        app:layout_constraintBottom_toTopOf="@id/dude_fragment_cancel_button"
-        />
-
-    <TextView
-        android:id="@+id/dude_fragment_date_textview"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="36dp"
-        android:maxLines="1"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dude_fragment_spinner_property"
-        app:layout_constraintBottom_toTopOf="@id/dude_fragment_edittext_info"
+        app:layout_constraintTop_toBottomOf="@id/dude_create_spinner_property"
+        app:layout_constraintBottom_toTopOf="@id/dude_create_cancel_button"
         />
 
 
     <EditText
-        android:id="@+id/dude_fragment_edittext_info"
+        android:id="@+id/dude_create_edittext_info"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -124,12 +100,12 @@
         android:paddingLeft="12dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dude_fragment_date_textview"
-        app:layout_constraintBottom_toTopOf="@id/dude_fragment_cancel_button"
+        app:layout_constraintTop_toBottomOf="@id/dude_create_spinner_property"
+        app:layout_constraintBottom_toTopOf="@id/dude_create_cancel_button"
         />
 
     <Button
-        android:id="@+id/dude_fragment_cancel_button"
+        android:id="@+id/dude_create_cancel_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/button_cancel"
@@ -139,12 +115,12 @@
         android:maxLines="1"
         app:autoSizeTextType="uniform"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="@id/dude_fragment_guide_vertical_50"
+        app:layout_constraintRight_toRightOf="@id/dude_create_guide_vertical_50"
         app:layout_constraintBottom_toBottomOf="parent"
         />
 
     <Button
-        android:id="@+id/dude_fragment_save_button"
+        android:id="@+id/dude_create_save_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/button_save"
@@ -153,11 +129,9 @@
         android:layout_marginBottom="8dp"
         android:maxLines="1"
         app:autoSizeTextType="uniform"
-        app:layout_constraintLeft_toLeftOf="@id/dude_fragment_guide_vertical_50"
+        app:layout_constraintLeft_toLeftOf="@id/dude_create_guide_vertical_50"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         />
-
-
 
 </android.support.constraint.ConstraintLayout>

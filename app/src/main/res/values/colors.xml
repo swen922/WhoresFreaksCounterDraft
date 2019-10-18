@@ -1,29 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#673AB7</color>
-    <color name="colorPrimaryDark">#311B92</color>
-    <color name="colorPrimaryLight">#B39DDB</color>
-    <color name="colorAccent">#B0BEC5</color>
+    <color name="colorPrimaryLight">#FFF8E1</color>
+    <color name="colorAccent">#FFECB3</color>
+    <color name="colorPrimary">#FFD54F</color>
+    <color name="colorPrimaryMedium">#FFA000</color>
+    <color name="colorPrimaryDark">#FF6F00</color>
 
-    <color name="whore_light_color">#FCE4EC</color>
-    <color name="whore_base_color">#F8BBD0</color>
-    <color name="whore_dark_color">#F06292</color>
+    <color name="colorOrangeDark">#BF360C</color>
 
-    <color name="freak_light_color">#EDE7F6</color>
-    <color name="freak_base_color">#D1C4E9</color>
-    <color name="freak_dark_color">#7E57C2</color>
+    <color name="colorBlueGrayLight">#ECEFF1</color>
+    <color name="colorBlueGrayPrimary">#90A4AE</color>
+    <color name="colorBlueGrayDark">#607D8B</color>
 
-    <color name="gray_accent_light">#90A4AE</color>
-    <color name="gray_accent_base">#455A64</color>
-    <color name="gray_accent_dark">#263238</color>
-
-    <color name="yellow_selection">#FFFF8D</color>
-
-
-    <color name="color_gray_top">#000033</color>
-    <color name="color_gray_spinner">#333333</color>
-    <color name="color_gray_1">#999999</color>
-    <color name="color_green1">#009933</color>
-    <color name="color_pink1">#FFCCCC</color>
-    <color name="color_sky1">#CCCCFF</color>
 </resources>

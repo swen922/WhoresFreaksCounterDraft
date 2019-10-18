@@ -20,7 +20,7 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
     private Context context;
     private int resourceID;
     private FragmentManager fragmentManager;
-    private final String KEY_FRAGMENT = "dudeFragment";
+    private final String KEY_FRAGMENT_EDIT = "KEY_FRAGMENT_EDIT";
 
     public DudeAdapter(Context context, int resource, List<Dude> objects, FragmentManager fm) {
         super(context, resource, objects);
@@ -36,18 +36,28 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
 
         DudeAdapter.ViewHolder viewHolder;
         Dude dude = getItem(position);
-        String spinnerString = dude.getSpinnerSelected();
+        int spinnerSelectedPosition = dude.getSpinnerSelectedPosition();
+        String spinnerSelected = "";
+        if (dude.getDudeType().equals(DudeType.WHORE)) {
+            spinnerSelected = getContext().getResources().getStringArray(R.array.whores_string_array)[spinnerSelectedPosition];
+        }
+        else {
+            spinnerSelected = getContext().getResources().getStringArray(R.array.freaks_string_array)[spinnerSelectedPosition];
+        }
+
+
         String descr = dude.getDescription();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
             viewHolder = new DudeAdapter.ViewHolder();
             convertView = inflater.inflate(resourceID, parent, false);
-            viewHolder.positionNumberTextView = (TextView) convertView.findViewById(R.id.list_item_textView_idnumber);
+            viewHolder.colorPosition = (TextView) convertView.findViewById(R.id.list_item_color_idnumber);
+            viewHolder.positionTextView = (TextView) convertView.findViewById(R.id.list_item_textView_idnumber);
             viewHolder.headerTextView = (TextView) convertView.findViewById(R.id.list_item_textView_description_header);
+            viewHolder.colorDescription = (TextView) convertView.findViewById(R.id.list_item_color_description);
             viewHolder.descriptionTextView = (TextView) convertView.findViewById(R.id.list_item_textView_description);
-            viewHolder.gradientDescription = (TextView) convertView.findViewById(R.id.list_item_gradient_description);
-            viewHolder.closeCrossImageView = (ImageView) convertView.findViewById(R.id.list_item_close_cross);
+            viewHolder.deleteCrossImageView = (ImageView) convertView.findViewById(R.id.list_item_delete_cross);
             convertView.setTag(viewHolder);
         }
         else {
@@ -55,16 +65,25 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
         }
 
         if (dude.getDudeType().equals(DudeType.WHORE)) {
-            viewHolder.gradientDescription.setBackground(context.getResources().getDrawable(R.drawable.background_whore1));
+            viewHolder.colorPosition.setBackground(context.getResources().getDrawable(R.drawable.list_item_color_counter_whore));
+            viewHolder.positionTextView.setTextColor(context.getResources().getColor(R.color.colorPrimaryLight));
+            viewHolder.colorDescription.setBackground(context.getResources().getDrawable(R.drawable.list_item_color_whore));
+            viewHolder.headerTextView.setTextColor(context.getResources().getColor(R.color.colorOrangeDark));
             viewHolder.headerTextView.setText(context.getResources().getString(R.string.list_item_whore));
+            viewHolder.deleteCrossImageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_close_red_24dp));
         }
         else {
-            viewHolder.gradientDescription.setBackground(context.getResources().getDrawable(R.drawable.background_freak1));
+            viewHolder.colorPosition.setBackground(context.getResources().getDrawable(R.drawable.list_item_color_counter_freak));
+            viewHolder.positionTextView.setTextColor(context.getResources().getColor(R.color.colorBlueGrayLight));
+            viewHolder.colorDescription.setBackground(context.getResources().getDrawable(R.drawable.list_item_color_freak));
+            viewHolder.headerTextView.setTextColor(context.getResources().getColor(R.color.colorBlueGrayDark));
             viewHolder.headerTextView.setText(context.getResources().getString(R.string.list_item_freak));
+            viewHolder.deleteCrossImageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_close_black_24dp));
         }
 
-        viewHolder.positionNumberTextView.setText(String.valueOf(position + 1));
-        viewHolder.descriptionTextView.setText(spinnerString + "\n" + descr);
+        int size = Data.getDudes().size();
+        viewHolder.positionTextView.setText(String.valueOf(size - position));
+        viewHolder.descriptionTextView.setText(spinnerSelected + "\n" + descr);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,17 +97,17 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
                 int count = fragmentManager.getBackStackEntryCount();
 
                 if (count == 0) {
-                    ft.add(R.id.container_main, dudeFragment, KEY_FRAGMENT);
-                    ft.addToBackStack(KEY_FRAGMENT);
+                    ft.add(R.id.container_main, dudeFragment, KEY_FRAGMENT_EDIT);
+                    ft.addToBackStack(KEY_FRAGMENT_EDIT);
                 }
                 else {
-                    ft.replace(R.id.container_main, dudeFragment, KEY_FRAGMENT);
+                    ft.replace(R.id.container_main, dudeFragment, KEY_FRAGMENT_EDIT);
                 }
                 ft.commit();
             }
         });
 
-        viewHolder.closeCrossImageView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.deleteCrossImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -102,18 +121,17 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
             }
         });
 
-        //Log.i("LOGGGGINGGG |||| ", viewHolder.headerTextView.getText().toString() + " - " + viewHolder.positionNumberTextView.getText().toString());
-
         return convertView;
 
     }
 
 
     public class ViewHolder {
-        TextView positionNumberTextView;
-        ImageView closeCrossImageView;
-        TextView headerTextView;
+        TextView colorPosition;
+        TextView positionTextView;
+        TextView colorDescription;
         TextView descriptionTextView;
-        TextView gradientDescription;
+        TextView headerTextView;
+        ImageView deleteCrossImageView;
     }
 }

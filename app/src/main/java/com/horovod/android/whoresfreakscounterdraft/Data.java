@@ -21,12 +21,14 @@ public class Data {
     public static final String KEY_SPINNER = "KEY_SPINNER";
     public static final String KEY_DUDETYPE = "KEY_DUDETYPE";
 
+    public static CreateFragment createFragment;
     public static DudeFragment dudeFragment;
+    public static SpinnerEditFragment spinnerEditFragment;
 
 
-    public static void createDude(DudeType dt, String description, String spinner) {
-        Dude dude = new Dude(dt, new Date(), description, spinner);
-
+    public static void createDude(DudeType dt, String description, int spinnerPos) {
+        Dude newDude = new Dude(dt, new Date(), description, spinnerPos);
+        dudes.addFirst(newDude);
     }
 
 

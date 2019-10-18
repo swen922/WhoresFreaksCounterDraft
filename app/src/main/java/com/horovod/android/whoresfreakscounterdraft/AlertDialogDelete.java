@@ -13,6 +13,7 @@ import android.widget.Toast;
 public class AlertDialogDelete extends DialogFragment {
 
     private int index;
+    private int size = Data.getDudes().size();
 
     @NonNull
     @Override
@@ -20,13 +21,13 @@ public class AlertDialogDelete extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         index = getArguments().getInt(Data.KEY_IDNUMBER);
-        String title = getString(R.string.delete_alert) + " " + (index + 1) + "?";
+        String title = getString(R.string.delete_alert) + " " + (size - index) + "?";
         builder.setTitle(title);
         builder.setPositiveButton(R.string.button_delete, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Data.KEY_DELETE_DUDE);
-                intent.putExtra(Data.KEY_IDNUMBER, index);
+                intent.putExtra(Data.KEY_IDNUMBER, (index));
                 getActivity().sendBroadcast(intent);
             }
         });

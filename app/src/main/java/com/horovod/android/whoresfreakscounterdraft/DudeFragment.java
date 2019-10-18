@@ -14,19 +14,22 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class DudeFragment extends Fragment {
 
     private TextView background;
-    //private ImageView dudeImageView;
     private TextView headerColor;
     private TextView headerTextView;
     private TextView indexTextView;
@@ -38,6 +41,8 @@ public class DudeFragment extends Fragment {
     private Button saveButton;
 
     private Dude myDude;
+    private List<String> spinnerItemsList;
+
 
     @Nullable
     @Override
@@ -48,7 +53,6 @@ public class DudeFragment extends Fragment {
         Data.dudeFragment = this;
 
         background = rootView.findViewById(R.id.dude_fragment_background);
-        //dudeImageView = rootView.findViewById(R.id.dude_fragment_picture);
         headerColor = rootView.findViewById(R.id.dude_fragment_color_header);
         headerTextView = rootView.findViewById(R.id.dude_fragment_textview_header);
         indexTextView = rootView.findViewById(R.id.dude_fragment_textview_index);
@@ -62,7 +66,7 @@ public class DudeFragment extends Fragment {
         background.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // nothing to do - blocking clicks on ListView through our DudeFragment
+                // nothing to do - prevent clicks on ListView through our DudeFragment
             }
         });
 
@@ -76,30 +80,39 @@ public class DudeFragment extends Fragment {
             }
         }
 
-        String[] spinnerItems;
+        ArrayAdapter<String> adapter;
 
         if (myDude != null) {
             if (myDude.getDudeType().equals(DudeType.WHORE)) {
                 headerTextView.setText(getResources().getString(R.string.list_item_whore));
+                headerTextView.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
+                background.setBackground(getResources().getDrawable(R.drawable.background_fragment_whore));
                 headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_whore));
-                indexTextView.setTextColor(getResources().getColor(R.color.whore_dark_color));
-                spinnerItems = getResources().getStringArray(R.array.whores_string_array);
-                //background.setBackground(getResources().getDrawable(R.drawable.background_fragment_whore));
+                indexTextView.setBackground(getResources().getDrawable(R.drawable.background_fragment_index_whore));
+                indexTextView.setTextColor(getResources().getColor(R.color.colorOrangeDark));
+                spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.whores_string_array)));
+                spinnerItemsList.add(getResources().getString(R.string.spinner_edit));
+                adapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row_whore, R.id.spinner_row_textview_whore, spinnerItemsList, getLayoutInflater(), DudeType.WHORE);
             }
             else {
                 headerTextView.setText(getResources().getString(R.string.list_item_freak));
+                headerTextView.setTextColor(getResources().getColor(R.color.colorBlueGrayLight));
+                background.setBackground(getResources().getDrawable(R.drawable.background_fragment_freak));
                 headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_freak));
-                indexTextView.setTextColor(getResources().getColor(R.color.freak_dark_color));
-                spinnerItems = getResources().getStringArray(R.array.freaks_string_array);
-                //background.setBackground(getResources().getDrawable(R.drawable.background_fragment_freak));
+                indexTextView.setBackground(getResources().getDrawable(R.drawable.background_fragment_index_freak));
+                indexTextView.setTextColor(getResources().getColor(R.color.colorBlueGrayDark));
+                spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.freaks_string_array)));
+                spinnerItemsList.add(getResources().getString(R.string.spinner_edit));
+                adapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row_freak, R.id.spinner_row_textview_freak, spinnerItemsList, getLayoutInflater(), DudeType.FREAK);
             }
 
-            indexTextView.setText(String.valueOf(dudeID + 1));
+            indexTextView.setText(String.valueOf(Data.getDudes().size() - dudeID));
+
             String dt = getString(R.string.dude_date_time) + " " + myDude.getDateString();
             dateTextView.setText(dt);
 
-            ArrayAdapter<String> adapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row, R.id.spinner_row_textview, spinnerItems, getLayoutInflater());
             propertySpinner.setAdapter(adapter);
+            propertySpinner.setSelection(myDude.getSpinnerSelectedPosition());
 
             descriptionEditText.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -146,6 +159,7 @@ public class DudeFragment extends Fragment {
                     descriptionEditText.setText(myDude.getDescription());
                     getActivity().getSupportFragmentManager().beginTransaction().remove(Data.dudeFragment).commit();
                     closeKeyboard();
+                    Data.dudeFragment = null;
                 }
             });
 
@@ -160,21 +174,50 @@ public class DudeFragment extends Fragment {
 
                     myDude.setDescription(inputDescription);
                     descriptionEditText.setText(inputDescription);
-                    myDude.setSpinnerSelected(inputSpinner);
-
+                    int spinnerPosition = getPositionOfSpinnerItem(inputSpinner);
+                    myDude.setSpinnerSelectedPosition(spinnerPosition);
 
                     Intent intent = new Intent(Data.KEY_UPDATE_DUDE);
                     intent.putExtra(Data.KEY_IDNUMBER, dudeIDfin);
                     intent.putExtra(Data.KEY_DESCRIPTION, inputDescription);
-                    intent.putExtra(Data.KEY_SPINNER, inputSpinner);
+                    intent.putExtra(Data.KEY_SPINNER, spinnerPosition);
                     getActivity().sendBroadcast(intent);
                     getActivity().getSupportFragmentManager().beginTransaction().remove(Data.dudeFragment).commit();
                     closeKeyboard();
+                    Data.dudeFragment = null;
                 }
             });
+
+            propertySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if (spinnerItemsList.get(position).equalsIgnoreCase(getString(R.string.spinner_edit))) {
+
+                        Toast.makeText(getContext(), "EDIT!!!", Toast.LENGTH_LONG).show();
+
+                        propertySpinner.setSelection(myDude.getSpinnerSelectedPosition());
+
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+
         }
 
         return rootView;
+    }
+
+    private int getPositionOfSpinnerItem(String line) {
+        int selected = spinnerItemsList.indexOf(line);
+        if (selected >= 0) {
+            return selected;
+        }
+        return 0;
     }
 
     private void closeKeyboard() {

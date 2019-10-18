@@ -5,7 +5,7 @@
     android:id="@+id/container_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back_gradient1"
+    android:background="@drawable/background_gradient"
     android:padding="16dp"
     tools:context=".MainActivity">
 
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.23"
+        app:layout_constraintGuide_percent="0.25"
         />
 
     <android.support.constraint.Guideline
@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.18"
+        app:layout_constraintGuide_percent="0.21"
         />
 
 
@@ -106,10 +106,10 @@
         android:id="@+id/textview_counter_freaks"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="3"
-        android:textColor="@android:color/white"
+        android:text="0"
+        android:textColor="@color/colorAccent"
         android:textStyle="bold"
-        android:gravity="top|right"
+        android:gravity="center_vertical|right"
         android:maxLines="1"
         app:autoSizeTextType="uniform"
         app:layout_constraintTop_toTopOf="parent"
@@ -122,11 +122,11 @@
         android:id="@+id/textview_counter_whores"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="21"
-        android:textColor="@android:color/white"
+        android:text="0"
+        android:textColor="@color/colorAccent"
         android:textStyle="bold"
         android:textAllCaps="true"
-        android:gravity="top|left"
+        android:gravity="center_vertical|left"
         android:maxLines="1"
         app:autoSizeTextType="uniform"
         app:layout_constraintTop_toTopOf="parent"
@@ -135,29 +135,13 @@
         app:layout_constraintBottom_toTopOf="@id/main_horizontal_guide2"
         />
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="16dp"
-        android:text=":"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:gravity="top|center"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintLeft_toLeftOf="@id/main_vertical_guide1"
-        app:layout_constraintRight_toRightOf="@id/main_vertical_guide2"
-        app:layout_constraintTop_toTopOf="@+id/main_horizontal_guide3"
-        app:layout_constraintBottom_toBottomOf="@id/main_horizontal_guide5"
-        />
-
 
     <TextView
         android:id="@+id/textview_add_freak"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/add_freak1"
-        android:textColor="@color/yellow_selection"
+        android:textColor="@android:color/white"
         android:textStyle="bold"
         android:textAllCaps="true"
         android:gravity="right"
@@ -175,7 +159,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/add_whore1"
-        android:textColor="@color/yellow_selection"
+        android:textColor="@android:color/white"
         android:textStyle="bold"
         android:textAllCaps="true"
         android:gravity="left"

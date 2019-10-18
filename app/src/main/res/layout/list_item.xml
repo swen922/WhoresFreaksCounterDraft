@@ -32,10 +32,10 @@
         />
 
     <TextView
-        android:id="@+id/list_item_gradient_idnumber"
+        android:id="@+id/list_item_color_idnumber"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:background="@drawable/back_gradient2"
+        android:background="@drawable/list_item_color_counter_whore"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="@+id/list_item__guide1"
@@ -48,7 +48,7 @@
         android:layout_height="0dp"
         android:gravity="center"
         android:text="000"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorPrimaryLight"
         android:textStyle="bold"
         android:textAlignment="center"
         android:maxLines="1"
@@ -64,10 +64,10 @@
 
 
     <TextView
-        android:id="@+id/list_item_gradient_description"
+        android:id="@+id/list_item_color_description"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:background="@drawable/background_whore1"
+        android:background="@drawable/list_item_color_whore"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/list_item__guide1"
@@ -78,12 +78,13 @@
         android:id="@+id/list_item_textView_description_header"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:textColor="@color/colorOrangeDark"
         android:textAllCaps="true"
         android:textStyle="bold"
-        android:maxLines="1"
-        app:autoSizeTextType="uniform"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:maxLines="1"
+        app:autoSizeTextType="uniform"
         app:layout_constraintLeft_toLeftOf="@+id/list_item__guide1"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -91,7 +92,7 @@
         />
 
     <ImageView
-        android:id="@+id/list_item_close_cross"
+        android:id="@+id/list_item_delete_cross"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:src="@drawable/ic_close_black_24dp"
@@ -109,7 +110,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:textSize="17sp"
-        android:alpha="0.7"
+        android:alpha="0.8"
         app:layout_constraintTop_toBottomOf="@id/list_item__guide_horiz1"
         app:layout_constraintLeft_toLeftOf="@+id/list_item__guide1"
         app:layout_constraintRight_toRightOf="parent"

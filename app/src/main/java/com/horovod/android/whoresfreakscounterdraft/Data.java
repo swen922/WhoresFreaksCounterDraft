@@ -2,6 +2,7 @@ package com.horovod.android.whoresfreakscounterdraft;
 
 import android.widget.ArrayAdapter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -12,6 +13,8 @@ import java.util.TreeMap;
 public class Data {
 
     private static LinkedList<Dude> dudes = new LinkedList<>();
+    private static List<String> whoresSpinner = new ArrayList<>();
+    private static List<String> freaksSpinner = new ArrayList<>();
 
     public static final String KEY_CREATE_DUDE = "whoresfreakscounterdraft_KEY_CREATE_DUDE";
     public static final String KEY_UPDATE_DUDE = "whoresfreakscounterdraft_KEY_UPDATE_DUDE";
@@ -26,7 +29,7 @@ public class Data {
     public static SpinnerEditFragment spinnerEditFragment;
 
 
-    public static void createDude(DudeType dt, String description, int spinnerPos) {
+    public static void createDude(String dt, String description, int spinnerPos) {
         Dude newDude = new Dude(dt, new Date(), description, spinnerPos);
         dudes.addFirst(newDude);
     }
@@ -82,6 +85,19 @@ public class Data {
         Data.dudes = new LinkedList<>(newDudes);
     }
 
+    public static List<String> getWhoresSpinner() {
+        return whoresSpinner;
+    }
 
+    public static void setWhoresSpinner(List<String> whoresSpinner) {
+        Data.whoresSpinner = whoresSpinner;
+    }
 
+    public static List<String> getFreaksSpinner() {
+        return freaksSpinner;
+    }
+
+    public static void setFreaksSpinner(List<String> freaksSpinner) {
+        Data.freaksSpinner = freaksSpinner;
+    }
 }

@@ -83,7 +83,7 @@ public class DudeFragment extends Fragment {
         ArrayAdapter<String> adapter;
 
         if (myDude != null) {
-            if (myDude.getDudeType().equals(DudeType.WHORE)) {
+            if (myDude.getDudeType().equals(DudeType.WHORE.toString())) {
                 headerTextView.setText(getResources().getString(R.string.list_item_whore));
                 headerTextView.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
                 background.setBackground(getResources().getDrawable(R.drawable.background_fragment_whore));

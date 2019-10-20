@@ -52,23 +52,28 @@ public class MainActivity extends AppCompatActivity {
         addFreakTextView = findViewById(R.id.textview_add_freak);
         addWhoreTextView = findViewById(R.id.textview_add_whore);
 
-        adapter = new DudeAdapter(this, R.layout.list_item, Data.getDudes(), fragmentManager);
 
-        for (int i = 0; i < 80; i++) {
+        final Loader loader = new Loader(getApplicationContext());
+        loader.readBaseFromJSON();
+        loader.readWhoreSpinnerFromJSON();
+        loader.readFreakSpinnerFromJSON();
+
+        /*for (int i = 0; i < 80; i++) {
             Date date1 = new Date();
             double tmp = Math.random();
             int a = (int) (tmp * 10);
             int b = a % 2;
             if (b == 0) {
-                Data.addDudeFirst(new Dude(DudeType.WHORE, date1, "Описание " + (i + 1), 0));
+                Data.addDudeFirst(new Dude(DudeType.WHORE.toString(), date1, "Описание " + (i + 1), 0));
             }
             else {
-                Data.addDudeFirst(new Dude(DudeType.FREAK, date1, "Описание " + (i + 1), 1));
+                Data.addDudeFirst(new Dude(DudeType.FREAK.toString(), date1, "Описание " + (i + 1), 1));
             }
-        }
+        }*/
 
         updateCounters();
 
+        adapter = new DudeAdapter(this, R.layout.list_item, Data.getDudes(), fragmentManager);
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -125,11 +130,12 @@ public class MainActivity extends AppCompatActivity {
                 int spinner = intent.getIntExtra(Data.KEY_SPINNER, 0);
 
                 if (createDudeType.equalsIgnoreCase(DudeType.WHORE.toString())) {
-                    Data.createDude(DudeType.WHORE, descr, spinner);
+                    Data.createDude(DudeType.WHORE.toString(), descr, spinner);
                 }
                 else {
-                    Data.createDude(DudeType.FREAK, descr, spinner);
+                    Data.createDude(DudeType.FREAK.toString(), descr, spinner);
                 }
+                loader.writeBaseToJSON();
                 adapter.notifyDataSetChanged();
                 updateCounters();
             }
@@ -147,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                     int newSpinner = intent.getIntExtra(Data.KEY_SPINNER, 0);
                     dude.setDescription(newDescription);
                     dude.setSpinnerSelectedPosition(newSpinner);
+                    loader.writeBaseToJSON();
                     adapter.notifyDataSetChanged();
                     updateCounters();
                 }
@@ -167,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
                     else {
                         Toast.makeText(getApplicationContext(), getString(R.string.delete_fail) + " " + (size - id), Toast.LENGTH_LONG).show();
                     }
+                    loader.writeBaseToJSON();
                     adapter.notifyDataSetChanged();
 
                 }
@@ -230,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
         if (!Data.getDudes().isEmpty()) {
             int freaks = 0;
             for (Dude dude : Data.getDudes()) {
-                if (dude.getDudeType().equals(DudeType.FREAK)) {
+                if (dude.getDudeType().equals(DudeType.FREAK.toString())) {
                     freaks++;
                 }
             }

@@ -37,15 +37,7 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
         DudeAdapter.ViewHolder viewHolder;
         Dude dude = getItem(position);
         int spinnerSelectedPosition = dude.getSpinnerSelectedPosition();
-        String spinnerSelected = "";
-        if (dude.getDudeType().equals(DudeType.WHORE)) {
-            spinnerSelected = getContext().getResources().getStringArray(R.array.whores_string_array)[spinnerSelectedPosition];
-        }
-        else {
-            spinnerSelected = getContext().getResources().getStringArray(R.array.freaks_string_array)[spinnerSelectedPosition];
-        }
-
-
+        String spinnerSelected;
         String descr = dude.getDescription();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -64,7 +56,8 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
             viewHolder = (DudeAdapter.ViewHolder) convertView.getTag();
         }
 
-        if (dude.getDudeType().equals(DudeType.WHORE)) {
+        if (dude.getDudeType().equals(DudeType.WHORE.toString())) {
+            spinnerSelected = getContext().getResources().getStringArray(R.array.whores_string_array)[spinnerSelectedPosition];
             viewHolder.colorPosition.setBackground(context.getResources().getDrawable(R.drawable.list_item_color_counter_whore));
             viewHolder.positionTextView.setTextColor(context.getResources().getColor(R.color.colorPrimaryLight));
             viewHolder.colorDescription.setBackground(context.getResources().getDrawable(R.drawable.list_item_color_whore));
@@ -73,6 +66,7 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
             viewHolder.deleteCrossImageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_close_red_24dp));
         }
         else {
+            spinnerSelected = getContext().getResources().getStringArray(R.array.freaks_string_array)[spinnerSelectedPosition];
             viewHolder.colorPosition.setBackground(context.getResources().getDrawable(R.drawable.list_item_color_counter_freak));
             viewHolder.positionTextView.setTextColor(context.getResources().getColor(R.color.colorBlueGrayLight));
             viewHolder.colorDescription.setBackground(context.getResources().getDrawable(R.drawable.list_item_color_freak));

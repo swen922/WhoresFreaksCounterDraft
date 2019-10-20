@@ -18,13 +18,13 @@ public class SpinnerEditFragment extends Fragment {
     private TextView background;
     private TextView topColorYexyView;
     private TextView headerTextView;
+    private EditText itemEditText0;
     private EditText itemEditText1;
     private EditText itemEditText2;
     private EditText itemEditText3;
     private EditText itemEditText4;
     private EditText itemEditText5;
     private EditText itemEditText6;
-    private EditText itemEditText7;
     private Button cancelButton;
     private Button saveButton;
 
@@ -43,13 +43,13 @@ public class SpinnerEditFragment extends Fragment {
         background = rootView.findViewById(R.id.spinner_edit_fragment_background);
         topColorYexyView = rootView.findViewById(R.id.spinner_edit_color_top);
         headerTextView = rootView.findViewById(R.id.spinner_edit_textview_header);
+        itemEditText0 = rootView.findViewById(R.id.spinner_edit_fragment_edittext0);
         itemEditText1 = rootView.findViewById(R.id.spinner_edit_fragment_edittext1);
         itemEditText2 = rootView.findViewById(R.id.spinner_edit_fragment_edittext2);
         itemEditText3 = rootView.findViewById(R.id.spinner_edit_fragment_edittext3);
         itemEditText4 = rootView.findViewById(R.id.spinner_edit_fragment_edittext4);
         itemEditText5 = rootView.findViewById(R.id.spinner_edit_fragment_edittext5);
         itemEditText6 = rootView.findViewById(R.id.spinner_edit_fragment_edittext6);
-        itemEditText7 = rootView.findViewById(R.id.spinner_edit_fragment_edittext7);
         cancelButton = rootView.findViewById(R.id.spinner_edit_fragment_cancel_button);
         saveButton = rootView.findViewById(R.id.spinner_edit_fragment_save_button);
 
@@ -60,8 +60,9 @@ public class SpinnerEditFragment extends Fragment {
             }
         });
 
-        Bundle args = getArguments();
 
+
+        Bundle args = getArguments();
         String dudeTypeString = "";
         if (args != null) {
             dudeTypeString = args.getString(Data.KEY_DUDETYPE);
@@ -69,15 +70,18 @@ public class SpinnerEditFragment extends Fragment {
         if (dudeTypeString != null && !dudeTypeString.isEmpty()) {
             if (dudeTypeString.equalsIgnoreCase(DudeType.WHORE.toString())) {
                 topColorYexyView.setBackground(getContext().getResources().getDrawable(R.drawable.background_fragment_spinner_edit_whore));
+                headerTextView.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
+                background.setBackground(getResources().getDrawable(R.drawable.background_fragment_index_whore));
 
-                // TODO
+                // TODO в том числе во фрагментах редактирования и создания инициализацию адаптера
 
             }
             else {
                 topColorYexyView.setBackground(getContext().getResources().getDrawable(R.drawable.background_fragment_spinner_edit_freak));
 
-                // TODO
-                
+                // TODO в том числе во фрагментах редактирования и создания инициализацию адаптера
+
+
             }
         }
 

@@ -4,12 +4,12 @@ import java.util.Date;
 
 public class Dude {
 
-    private DudeType dudeType;
+    private String dudeType;
     private String dateString;
     private String description;
     private int spinnerSelectedPosition;
 
-    public Dude(DudeType dudeType, String dateString, String description, int selected) {
+    public Dude(String dudeType, String dateString, String description, int selected) {
         this.dudeType = dudeType;
         this.dateString = dateString;
         this.description = description;
@@ -17,14 +17,14 @@ public class Dude {
     }
 
     // Constructor with Date formatting to two Strings
-    public Dude(DudeType dudeType, Date date, String description, int selected) {
+    public Dude(String dudeType, Date date, String description, int selected) {
         this.dudeType = dudeType;
         this.dateString = Util.formatDate(date);
         this.description = description;
         this.spinnerSelectedPosition = selected;
     }
 
-    public DudeType getDudeType() {
+    public String getDudeType() {
         return dudeType;
     }
 

@@ -147,7 +147,7 @@ public class Loader {
 
         String input = sb.toString();
 
-        Log.i("LOGGGINGGG |||| ", "WhoresInput.isEmpty() = " + input.isEmpty());
+        //Log.i("LOGGGINGGG |||| ", "WhoresInput.isEmpty() = " + input.isEmpty());
 
         if (!input.isEmpty()) {
             Gson gson = new Gson();
@@ -175,7 +175,7 @@ public class Loader {
 
         String input = sb.toString();
 
-        Log.i("LOGGGINGGG |||| ", "FreaksInput.isEmpty() = " + input.isEmpty());
+        //Log.i("LOGGGINGGG |||| ", "FreaksInput.isEmpty() = " + input.isEmpty());
 
         if (!input.isEmpty()) {
             Gson gson = new Gson();

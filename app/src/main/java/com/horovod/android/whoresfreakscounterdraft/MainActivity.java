@@ -81,19 +81,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FragmentTransaction ft = fragmentManager.beginTransaction();
-                CreateFragment createFragment = new CreateFragment();
+                Data.createFragment = new CreateFragment();
                 Bundle args = new Bundle();
                 args.putString(Data.KEY_DUDETYPE, DudeType.FREAK.toString());
-                createFragment.setArguments(args);
+                Data.createFragment.setArguments(args);
 
                 int count = fragmentManager.getBackStackEntryCount();
 
                 if (count == 0) {
-                    ft.add(R.id.container_main, createFragment, KEY_FRAGMENT_CREATE);
+                    ft.add(R.id.container_main, Data.createFragment, KEY_FRAGMENT_CREATE);
                     ft.addToBackStack(KEY_FRAGMENT_CREATE);
                 }
                 else {
-                    ft.replace(R.id.container_main, createFragment, KEY_FRAGMENT_CREATE);
+                    ft.replace(R.id.container_main, Data.createFragment, KEY_FRAGMENT_CREATE);
                 }
                 ft.commit();
             }
@@ -103,19 +103,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FragmentTransaction ft = fragmentManager.beginTransaction();
-                CreateFragment createFragment = new CreateFragment();
+                Data.createFragment = new CreateFragment();
                 Bundle args = new Bundle();
                 args.putString(Data.KEY_DUDETYPE, DudeType.WHORE.toString());
-                createFragment.setArguments(args);
+                Data.createFragment.setArguments(args);
 
                 int count = fragmentManager.getBackStackEntryCount();
 
                 if (count == 0) {
-                    ft.add(R.id.container_main, createFragment, KEY_FRAGMENT_CREATE);
+                    ft.add(R.id.container_main, Data.createFragment, KEY_FRAGMENT_CREATE);
                     ft.addToBackStack(KEY_FRAGMENT_CREATE);
                 }
                 else {
-                    ft.replace(R.id.container_main, createFragment, KEY_FRAGMENT_CREATE);
+                    ft.replace(R.id.container_main, Data.createFragment, KEY_FRAGMENT_CREATE);
                 }
                 ft.commit();
             }
@@ -205,29 +205,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        int count = fragmentManager.getBackStackEntryCount();
-
-        if (count > 0) {
-            while(count > 0){
-                if (Data.spinnerEditFragment != null) {
-                    getSupportFragmentManager().beginTransaction().remove(Data.spinnerEditFragment).commit();
-                    fragmentManager.popBackStack();
-                    count--;
-                    Data.spinnerEditFragment = null;
-                }
-                else if (Data.createFragment != null) {
-                    getSupportFragmentManager().beginTransaction().remove(Data.createFragment).commit();
-                    fragmentManager.popBackStack();
-                    count--;
-                    Data.createFragment = null;
-                }
-                else if (Data.dudeFragment != null) {
-                    getSupportFragmentManager().beginTransaction().remove(Data.dudeFragment).commit();
-                    fragmentManager.popBackStack();
-                    count--;
-                    Data.dudeFragment = null;
-                }
-            }
+        if (Data.spinnerEditItemFragment != null) {
+            fragmentManager.beginTransaction().remove(Data.spinnerEditItemFragment).commit();
+            Data.spinnerEditItemFragment = null;
+        }
+        else if (Data.spinnerEditFragment != null) {
+            fragmentManager.beginTransaction().remove(Data.spinnerEditFragment).commit();
+            Data.spinnerEditFragment = null;
+        }
+        else if (Data.createFragment != null) {
+            fragmentManager.beginTransaction().remove(Data.createFragment).commit();
+            Data.createFragment = null;
+        }
+        else if (Data.dudeFragment != null) {
+            fragmentManager.beginTransaction().remove(Data.dudeFragment).commit();
+            Data.dudeFragment = null;
         }
         else {
             super.onBackPressed();

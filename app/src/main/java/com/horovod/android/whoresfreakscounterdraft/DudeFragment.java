@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -90,6 +92,8 @@ public class DudeFragment extends Fragment {
                 headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_whore));
                 indexTextView.setBackground(getResources().getDrawable(R.drawable.background_fragment_index_whore));
                 indexTextView.setTextColor(getResources().getColor(R.color.colorOrangeDark));
+
+                // TODO изменить иницилизацию списка тут и ниже
                 spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.whores_string_array)));
                 spinnerItemsList.add(getResources().getString(R.string.spinner_edit));
                 adapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row_whore, R.id.spinner_row_textview_whore, spinnerItemsList, getLayoutInflater(), DudeType.WHORE);
@@ -171,17 +175,18 @@ public class DudeFragment extends Fragment {
                     String inputDescription = descriptionEditText.getText().toString();
                     inputDescription = Util.clearGaps(inputDescription);
                     String inputSpinner = propertySpinner.getSelectedItem().toString();
-
-                    myDude.setDescription(inputDescription);
-                    descriptionEditText.setText(inputDescription);
                     int spinnerPosition = getPositionOfSpinnerItem(inputSpinner);
-                    myDude.setSpinnerSelectedPosition(spinnerPosition);
+
+                    /*myDude.setDescription(inputDescription);
+                    descriptionEditText.setText(inputDescription);
+                    myDude.setSpinnerSelectedPosition(spinnerPosition);*/
 
                     Intent intent = new Intent(Data.KEY_UPDATE_DUDE);
                     intent.putExtra(Data.KEY_IDNUMBER, dudeIDfin);
                     intent.putExtra(Data.KEY_DESCRIPTION, inputDescription);
                     intent.putExtra(Data.KEY_SPINNER, spinnerPosition);
                     getActivity().sendBroadcast(intent);
+
                     getActivity().getSupportFragmentManager().beginTransaction().remove(Data.dudeFragment).commit();
                     closeKeyboard();
                     Data.dudeFragment = null;
@@ -193,10 +198,20 @@ public class DudeFragment extends Fragment {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     if (spinnerItemsList.get(position).equalsIgnoreCase(getString(R.string.spinner_edit))) {
 
-                        Toast.makeText(getContext(), "EDIT!!!", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(), "EDIT!!!", Toast.LENGTH_LONG).show();
 
                         propertySpinner.setSelection(myDude.getSpinnerSelectedPosition());
 
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction ft = fragmentManager.beginTransaction();
+                        Data.spinnerEditFragment = new SpinnerEditFragment();
+
+                        Bundle args = new Bundle();
+                        args.putString(Data.KEY_DUDETYPE, myDude.getDudeType());
+                        Data.spinnerEditFragment.setArguments(args);
+
+                        ft.add(R.id.container_main, Data.spinnerEditFragment, Data.KEY_SPINNER_EDIT);
+                        ft.commit();
                     }
                 }
 

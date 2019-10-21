@@ -76,6 +76,8 @@ public class CreateFragment extends Fragment {
                     headerTextView.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
                     background.setBackground(getResources().getDrawable(R.drawable.background_fragment_whore));
                     headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_whore));
+
+                    // TODO изменить иницилизацию списка тут и ниже
                     spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.whores_string_array)));
                     spinnerItemsList.add(getResources().getString(R.string.spinner_edit));
                     adapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row_whore, R.id.spinner_row_textview_whore, spinnerItemsList, getLayoutInflater(), DudeType.WHORE);
@@ -141,8 +143,8 @@ public class CreateFragment extends Fragment {
                 inputDescription = Util.clearGaps(inputDescription);
                 String inputSpinner = propertySpinner.getSelectedItem().toString();
                 int spinnerPosition = getPositionOfSpinnerItem(inputSpinner);
-                Intent intent = new Intent(Data.KEY_CREATE_DUDE);
 
+                Intent intent = new Intent(Data.KEY_CREATE_DUDE);
                 if (createDudeType != null && !createDudeType.isEmpty()) {
                     if (createDudeType.equalsIgnoreCase(DudeType.WHORE.toString())) {
                         intent.putExtra(Data.KEY_DUDETYPE, DudeType.WHORE.toString());
@@ -150,14 +152,13 @@ public class CreateFragment extends Fragment {
                     else {
                         intent.putExtra(Data.KEY_DUDETYPE, DudeType.FREAK.toString());
                     }
+                    intent.putExtra(Data.KEY_DESCRIPTION, inputDescription);
+                    intent.putExtra(Data.KEY_SPINNER, spinnerPosition);
+                    getActivity().sendBroadcast(intent);
+                    getActivity().getSupportFragmentManager().beginTransaction().remove(Data.createFragment).commit();
+                    closeKeyboard();
+                    Data.createFragment = null;
                 }
-                intent.putExtra(Data.KEY_DESCRIPTION, inputDescription);
-                intent.putExtra(Data.KEY_SPINNER, spinnerPosition);
-                getActivity().sendBroadcast(intent);
-                getActivity().getSupportFragmentManager().beginTransaction().remove(Data.createFragment).commit();
-                closeKeyboard();
-                Data.createFragment = null;
-
             }
         });
         return rootView;

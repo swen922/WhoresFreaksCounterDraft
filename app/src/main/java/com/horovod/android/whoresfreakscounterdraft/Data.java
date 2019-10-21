@@ -22,11 +22,17 @@ public class Data {
     public static final String KEY_IDNUMBER = "KEY_IDNUMBER";
     public static final String KEY_DESCRIPTION = "KEY_DESCRIPTION";
     public static final String KEY_SPINNER = "KEY_SPINNER";
+    public static final String KEY_SPINNER_ITEM = "KEY_SPINNER_ITEM";
     public static final String KEY_DUDETYPE = "KEY_DUDETYPE";
+    public static final String KEY_SPINNER_EDIT = "KEY_SPINNER_EDIT";
+    public static final String KEY_SPINNER_EDIT_ITEM = "KEY_SPINNER_EDIT_ITEM";
+
+
 
     public static CreateFragment createFragment;
     public static DudeFragment dudeFragment;
     public static SpinnerEditFragment spinnerEditFragment;
+    public static SpinnerEditItemFragment spinnerEditItemFragment;
 
 
     public static void createDude(String dt, String description, int spinnerPos) {

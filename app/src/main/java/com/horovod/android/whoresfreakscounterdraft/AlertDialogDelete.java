@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class AlertDialogDelete extends DialogFragment {
@@ -38,6 +40,14 @@ public class AlertDialogDelete extends DialogFragment {
             }
         });
 
-        return builder.create();
+        AlertDialog dialog = builder.create();
+        dialog.show(); /*** ОБЯЗАТЕЛЬНО!!! Вначале вызывать метод dialog.show() Иначе кнопки будут = null   ***/
+
+        dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorBlueGrayDark));
+        dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorBlueGrayDark));
+
+        //return builder.create();
+        return dialog;
+
     }
 }

@@ -1,6 +1,9 @@
 package com.horovod.android.whoresfreakscounterdraft;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,11 +35,15 @@ public class SpinnerEditFragment extends Fragment {
     private TextView itemEditText4;
     private TextView itemEditText5;
     private TextView itemEditText6;
+    private TextView revertItems;
     private Button cancelButton;
     private Button saveButton;
 
     private List<String> spinnerItemsList;
     private String dudeTypeString = "";
+    private BroadcastReceiver spinnerItemReceiver;
+
+    private int selectedPosition = 0;
 
 
     @Nullable
@@ -58,6 +65,7 @@ public class SpinnerEditFragment extends Fragment {
         itemEditText4 = rootView.findViewById(R.id.spinner_edit_fragment_edittext4);
         itemEditText5 = rootView.findViewById(R.id.spinner_edit_fragment_edittext5);
         itemEditText6 = rootView.findViewById(R.id.spinner_edit_fragment_edittext6);
+        revertItems = rootView.findViewById(R.id.spinner_edit_fragment_revert);
         cancelButton = rootView.findViewById(R.id.spinner_edit_fragment_cancel_button);
         saveButton = rootView.findViewById(R.id.spinner_edit_fragment_save_button);
 
@@ -73,6 +81,7 @@ public class SpinnerEditFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             dudeTypeString = args.getString(Data.KEY_DUDETYPE);
+            selectedPosition = args.getInt(Data.KEY_PREVIOUS_ITEM, 0);
         }
         if (dudeTypeString != null && !dudeTypeString.isEmpty()) {
             if (dudeTypeString.equalsIgnoreCase(DudeType.WHORE.toString())) {
@@ -85,17 +94,19 @@ public class SpinnerEditFragment extends Fragment {
                 else {
                     spinnerItemsList = new ArrayList<>(Data.getWhoresSpinner());
                 }
+                revertItems.setTextColor(getResources().getColor(R.color.colorPrimaryMedium));
             }
             else {
                 topColorYexyView.setBackground(getContext().getResources().getDrawable(R.drawable.background_fragment_spinner_edit_top_freak));
                 headerTextView.setTextColor(getResources().getColor(R.color.colorBlueGrayLight));
                 background.setBackground(getResources().getDrawable(R.drawable.background_fragment_spinner_edit_freak));
-                if (Data.getWhoresSpinner().isEmpty()) {
+                if (Data.getFreaksSpinner().isEmpty()) {
                     spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.freaks_string_array)));
                 }
                 else {
                     spinnerItemsList = new ArrayList<>(Data.getFreaksSpinner());
                 }
+                revertItems.setTextColor(getResources().getColor(R.color.colorBlueGrayPrimary));
             }
 
             itemEditText0.setText(spinnerItemsList.get(0));
@@ -106,31 +117,136 @@ public class SpinnerEditFragment extends Fragment {
             itemEditText5.setText(spinnerItemsList.get(5));
             itemEditText6.setText(spinnerItemsList.get(6));
 
-            View.OnClickListener editListener = new View.OnClickListener() {
+            itemEditText0.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     TextView textView = (TextView) v;
-                    int position = 0;
-                    position = spinnerItemsList.indexOf(textView.getText().toString());
-                    openEditItemFragment(position);
+                    openEditItemFragment(0, itemEditText0.getText().toString());
                 }
-            };
-
-            itemEditText0.setOnClickListener(editListener);
-            itemEditText1.setOnClickListener(editListener);
-            itemEditText2.setOnClickListener(editListener);
-            itemEditText3.setOnClickListener(editListener);
-            itemEditText4.setOnClickListener(editListener);
-            itemEditText5.setOnClickListener(editListener);
-            itemEditText6.setOnClickListener(editListener);
+            });
+            itemEditText1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TextView textView = (TextView) v;
+                    openEditItemFragment(1, itemEditText1.getText().toString());
+                }
+            });
+            itemEditText2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TextView textView = (TextView) v;
+                    openEditItemFragment(2, itemEditText2.getText().toString());
+                }
+            });
+            itemEditText3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TextView textView = (TextView) v;
+                    openEditItemFragment(3, itemEditText3.getText().toString());
+                }
+            });
+            itemEditText4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TextView textView = (TextView) v;
+                    openEditItemFragment(4, itemEditText4.getText().toString());
+                }
+            });
+            itemEditText5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TextView textView = (TextView) v;
+                    openEditItemFragment(5, itemEditText5.getText().toString());
+                }
+            });
+            itemEditText6.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TextView textView = (TextView) v;
+                    openEditItemFragment(6, itemEditText6.getText().toString());
+                }
+            });
 
         }
+
+        spinnerItemReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int position = intent.getIntExtra(Data.KEY_IDNUMBER, 0);
+                String newItem = intent.getStringExtra(Data.KEY_SPINNER_ITEM);
+                switch (position) {
+                    case 0 :
+                        itemEditText0.setText(newItem);
+                        break;
+                    case 1 :
+                        itemEditText1.setText(newItem);
+                        break;
+                    case 2 :
+                        itemEditText2.setText(newItem);
+                        break;
+                    case 3 :
+                        itemEditText3.setText(newItem);
+                        break;
+                    case 4 :
+                        itemEditText4.setText(newItem);
+                        break;
+                    case 5 :
+                        itemEditText5.setText(newItem);
+                        break;
+                    case 6 :
+                        itemEditText6.setText(newItem);
+                        break;
+                }
+            }
+        };
+        IntentFilter intentFilterSpinnerItem = new IntentFilter(Data.KEY_SPINNER_UPDATE_ITEM);
+        getContext().registerReceiver(spinnerItemReceiver, intentFilterSpinnerItem);
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction().remove(Data.spinnerEditFragment).commit();
+                Data.spinnerEditFragment = null;
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                spinnerItemsList.clear();
+                spinnerItemsList.add(itemEditText0.getText().toString());
+                spinnerItemsList.add(itemEditText1.getText().toString());
+                spinnerItemsList.add(itemEditText2.getText().toString());
+                spinnerItemsList.add(itemEditText3.getText().toString());
+                spinnerItemsList.add(itemEditText4.getText().toString());
+                spinnerItemsList.add(itemEditText5.getText().toString());
+                spinnerItemsList.add(itemEditText6.getText().toString());
+
+                Loader loader = new Loader(getContext());
+                if (dudeTypeString.equalsIgnoreCase(DudeType.WHORE.toString())) {
+                    Data.setWhoresSpinner(spinnerItemsList);
+                    loader.writeWhoreSpinnerToJSON();
+                }
+                else {
+                    Data.setFreaksSpinner(spinnerItemsList);
+                    loader.writeFreakSpinnerToJSON();
+                }
+
+                Intent intent = new Intent(Data.KEY_SPINNER_EDIT);
+                intent.putExtra(Data.KEY_PREVIOUS_ITEM, selectedPosition);
+                getActivity().sendBroadcast(intent);
+
+                getActivity().getSupportFragmentManager().beginTransaction().remove(Data.spinnerEditFragment).commit();
+                Data.spinnerEditFragment = null;
+            }
+        });
 
         return rootView;
     }
 
 
-    private void openEditItemFragment(int position) {
+    private void openEditItemFragment(int position, String editItem) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Data.spinnerEditItemFragment = new SpinnerEditItemFragment();
@@ -138,11 +254,16 @@ public class SpinnerEditFragment extends Fragment {
         Bundle args = new Bundle();
         args.putInt(Data.KEY_IDNUMBER, position);
         args.putString(Data.KEY_DUDETYPE, dudeTypeString);
+        args.putString(Data.KEY_SPINNER_EDIT_ITEM, editItem);
         Data.spinnerEditItemFragment.setArguments(args);
 
-        ft.add(R.id.container_main, Data.spinnerEditItemFragment, Data.KEY_SPINNER_EDIT_ITEM);
+        ft.add(R.id.container_main, Data.spinnerEditItemFragment, null);
         ft.commit();
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getContext().unregisterReceiver(spinnerItemReceiver);
+    }
 }

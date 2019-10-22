@@ -42,6 +42,9 @@
     </string-array>
 
     <string name="spinner_edit">РЕДАКТИРОВАТЬ СПИСОК</string>
+    <string name="spinner_revert">Вернуть значения\nпо умолчанию</string>
+    <string name="spinner_item_revert">Вернуть значение этого пункта по умолчанию</string>
+
     <string name="spinner_edit_header">Редактирование характеристик</string>
     <string name="spinner_edit_prompt">Впишите ваши варианты характеристик.\nНе более 25 символов.</string>
     <string name="spinner_edit_item_prompt">Впишите ваш вариант характеристики.\nНе более 25 символов.</string>

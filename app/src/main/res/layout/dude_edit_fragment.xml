@@ -120,6 +120,7 @@
         android:id="@+id/dude_fragment_edittext_info"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:inputType="textCapSentences"
         android:layout_marginBottom="8dp"
         android:gravity="top"
         android:paddingLeft="12dp"

@@ -20,7 +20,6 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
     private Context context;
     private int resourceID;
     private FragmentManager fragmentManager;
-    private final String KEY_FRAGMENT_EDIT = "KEY_FRAGMENT_EDIT";
 
     public DudeAdapter(Context context, int resource, List<Dude> objects, FragmentManager fm) {
         super(context, resource, objects);
@@ -57,7 +56,12 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
         }
 
         if (dude.getDudeType().equals(DudeType.WHORE.toString())) {
-            spinnerSelected = getContext().getResources().getStringArray(R.array.whores_string_array)[spinnerSelectedPosition];
+            if (Data.getWhoresSpinner().isEmpty()) {
+                spinnerSelected = getContext().getResources().getStringArray(R.array.whores_string_array)[spinnerSelectedPosition];
+            }
+            else {
+                spinnerSelected = Data.getWhoresSpinner().get(spinnerSelectedPosition);
+            }
             viewHolder.colorPosition.setBackground(context.getResources().getDrawable(R.drawable.list_item_color_counter_whore));
             viewHolder.positionTextView.setTextColor(context.getResources().getColor(R.color.colorPrimaryLight));
             viewHolder.colorDescription.setBackground(context.getResources().getDrawable(R.drawable.list_item_color_whore));
@@ -66,7 +70,12 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
             viewHolder.deleteCrossImageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_close_red_24dp));
         }
         else {
-            spinnerSelected = getContext().getResources().getStringArray(R.array.freaks_string_array)[spinnerSelectedPosition];
+            if (Data.getFreaksSpinner().isEmpty()) {
+                spinnerSelected = getContext().getResources().getStringArray(R.array.freaks_string_array)[spinnerSelectedPosition];
+            }
+            else {
+                spinnerSelected = Data.getFreaksSpinner().get(spinnerSelectedPosition);
+            }
             viewHolder.colorPosition.setBackground(context.getResources().getDrawable(R.drawable.list_item_color_counter_freak));
             viewHolder.positionTextView.setTextColor(context.getResources().getColor(R.color.colorBlueGrayLight));
             viewHolder.colorDescription.setBackground(context.getResources().getDrawable(R.drawable.list_item_color_freak));
@@ -87,16 +96,7 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
                 Bundle args = new Bundle();
                 args.putInt(Data.KEY_IDNUMBER, position);
                 dudeFragment.setArguments(args);
-
-                int count = fragmentManager.getBackStackEntryCount();
-
-                if (count == 0) {
-                    ft.add(R.id.container_main, dudeFragment, KEY_FRAGMENT_EDIT);
-                    ft.addToBackStack(KEY_FRAGMENT_EDIT);
-                }
-                else {
-                    ft.replace(R.id.container_main, dudeFragment, KEY_FRAGMENT_EDIT);
-                }
+                ft.add(R.id.container_main, dudeFragment, null);
                 ft.commit();
             }
         });

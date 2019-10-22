@@ -19,13 +19,16 @@ public class Data {
     public static final String KEY_CREATE_DUDE = "whoresfreakscounterdraft_KEY_CREATE_DUDE";
     public static final String KEY_UPDATE_DUDE = "whoresfreakscounterdraft_KEY_UPDATE_DUDE";
     public static final String KEY_DELETE_DUDE = "whoresfreakscounterdraft_KEY_DELETE_DUDE";
-    public static final String KEY_IDNUMBER = "KEY_IDNUMBER";
-    public static final String KEY_DESCRIPTION = "KEY_DESCRIPTION";
-    public static final String KEY_SPINNER = "KEY_SPINNER";
-    public static final String KEY_SPINNER_ITEM = "KEY_SPINNER_ITEM";
-    public static final String KEY_DUDETYPE = "KEY_DUDETYPE";
-    public static final String KEY_SPINNER_EDIT = "KEY_SPINNER_EDIT";
-    public static final String KEY_SPINNER_EDIT_ITEM = "KEY_SPINNER_EDIT_ITEM";
+    public static final String KEY_IDNUMBER = "whoresfreakscounterdraft_KEY_IDNUMBER";
+    public static final String KEY_DESCRIPTION = "whoresfreakscounterdraft_KEY_DESCRIPTION";
+    public static final String KEY_SPINNER = "whoresfreakscounterdraft_KEY_SPINNER";
+    public static final String KEY_SPINNER_ITEM = "whoresfreakscounterdraft_KEY_SPINNER_ITEM";
+    public static final String KEY_DUDETYPE = "whoresfreakscounterdraft_KEY_DUDETYPE";
+    public static final String KEY_SPINNER_EDIT = "whoresfreakscounterdraft_KEY_SPINNER_EDIT";
+    public static final String KEY_SPINNER_EDIT_ITEM = "whoresfreakscounterdraft_KEY_SPINNER_EDIT_ITEM";
+    public static final String KEY_SPINNER_UPDATE_ITEM = "whoresfreakscounterdraft_KEY_SPINNER_UPDATE_ITEM";
+    public static final String KEY_PREVIOUS_ITEM = "whoresfreakscounterdraft_KEY_PREVIOUS_ITEM";
+
 
 
 
@@ -96,7 +99,7 @@ public class Data {
     }
 
     public static void setWhoresSpinner(List<String> whoresSpinner) {
-        Data.whoresSpinner = whoresSpinner;
+        Data.whoresSpinner = new ArrayList<>(whoresSpinner);
     }
 
     public static List<String> getFreaksSpinner() {
@@ -104,6 +107,6 @@ public class Data {
     }
 
     public static void setFreaksSpinner(List<String> freaksSpinner) {
-        Data.freaksSpinner = freaksSpinner;
+        Data.freaksSpinner = new ArrayList<>(freaksSpinner);
     }
 }

@@ -1,7 +1,9 @@
 package com.horovod.android.whoresfreakscounterdraft;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,6 +46,12 @@ public class DudeFragment extends Fragment {
 
     private Dude myDude;
     private List<String> spinnerItemsList;
+    private ArrayAdapter<String> spinnerAdapter;
+
+    private String selectedSpinnerItem = "";
+    private int selectedSpinnerPosition = 0;
+
+    private BroadcastReceiver spinnerEditReceiver;
 
 
     @Nullable
@@ -82,8 +90,6 @@ public class DudeFragment extends Fragment {
             }
         }
 
-        ArrayAdapter<String> adapter;
-
         if (myDude != null) {
             if (myDude.getDudeType().equals(DudeType.WHORE.toString())) {
                 headerTextView.setText(getResources().getString(R.string.list_item_whore));
@@ -92,11 +98,7 @@ public class DudeFragment extends Fragment {
                 headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_whore));
                 indexTextView.setBackground(getResources().getDrawable(R.drawable.background_fragment_index_whore));
                 indexTextView.setTextColor(getResources().getColor(R.color.colorOrangeDark));
-
-                // TODO изменить иницилизацию списка тут и ниже
-                spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.whores_string_array)));
-                spinnerItemsList.add(getResources().getString(R.string.spinner_edit));
-                adapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row_whore, R.id.spinner_row_textview_whore, spinnerItemsList, getLayoutInflater(), DudeType.WHORE);
+                initSpinner(myDude.getDudeType());
             }
             else {
                 headerTextView.setText(getResources().getString(R.string.list_item_freak));
@@ -105,9 +107,7 @@ public class DudeFragment extends Fragment {
                 headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_freak));
                 indexTextView.setBackground(getResources().getDrawable(R.drawable.background_fragment_index_freak));
                 indexTextView.setTextColor(getResources().getColor(R.color.colorBlueGrayDark));
-                spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.freaks_string_array)));
-                spinnerItemsList.add(getResources().getString(R.string.spinner_edit));
-                adapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row_freak, R.id.spinner_row_textview_freak, spinnerItemsList, getLayoutInflater(), DudeType.FREAK);
+                initSpinner(myDude.getDudeType());
             }
 
             indexTextView.setText(String.valueOf(Data.getDudes().size() - dudeID));
@@ -115,8 +115,8 @@ public class DudeFragment extends Fragment {
             String dt = getString(R.string.dude_date_time) + " " + myDude.getDateString();
             dateTextView.setText(dt);
 
-            propertySpinner.setAdapter(adapter);
             propertySpinner.setSelection(myDude.getSpinnerSelectedPosition());
+
 
             descriptionEditText.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -177,10 +177,6 @@ public class DudeFragment extends Fragment {
                     String inputSpinner = propertySpinner.getSelectedItem().toString();
                     int spinnerPosition = getPositionOfSpinnerItem(inputSpinner);
 
-                    /*myDude.setDescription(inputDescription);
-                    descriptionEditText.setText(inputDescription);
-                    myDude.setSpinnerSelectedPosition(spinnerPosition);*/
-
                     Intent intent = new Intent(Data.KEY_UPDATE_DUDE);
                     intent.putExtra(Data.KEY_IDNUMBER, dudeIDfin);
                     intent.putExtra(Data.KEY_DESCRIPTION, inputDescription);
@@ -196,11 +192,16 @@ public class DudeFragment extends Fragment {
             propertySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
                     if (spinnerItemsList.get(position).equalsIgnoreCase(getString(R.string.spinner_edit))) {
 
-                        //Toast.makeText(getContext(), "EDIT!!!", Toast.LENGTH_LONG).show();
-
-                        propertySpinner.setSelection(myDude.getSpinnerSelectedPosition());
+                        if (selectedSpinnerItem.isEmpty()) {
+                            propertySpinner.setSelection(myDude.getSpinnerSelectedPosition());
+                        }
+                        else {
+                            propertySpinner.setSelection(getPositionOfSpinnerItem(selectedSpinnerItem));
+                        }
 
                         FragmentManager fragmentManager = getFragmentManager();
                         FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -208,11 +209,23 @@ public class DudeFragment extends Fragment {
 
                         Bundle args = new Bundle();
                         args.putString(Data.KEY_DUDETYPE, myDude.getDudeType());
+                        if (!selectedSpinnerItem.isEmpty()) {
+                            selectedSpinnerItem = propertySpinner.getSelectedItem().toString();
+                            args.putInt(Data.KEY_PREVIOUS_ITEM, selectedSpinnerPosition);
+                        }
                         Data.spinnerEditFragment.setArguments(args);
 
-                        ft.add(R.id.container_main, Data.spinnerEditFragment, Data.KEY_SPINNER_EDIT);
+                        ft.add(R.id.container_main, Data.spinnerEditFragment, null);
                         ft.commit();
                     }
+                    else {
+                        selectedSpinnerItem = propertySpinner.getSelectedItem().toString();
+                        selectedSpinnerPosition = getPositionOfSpinnerItem(propertySpinner.getSelectedItem().toString());
+                    }
+
+                    Log.i("LOGGINGGG ||| ", "selectedSpinnerItem = " + selectedSpinnerItem);
+                    Log.i("LOGGINGGG ||| ", "selectedSpinnerPosition = " + selectedSpinnerPosition);
+
                 }
 
                 @Override
@@ -221,7 +234,19 @@ public class DudeFragment extends Fragment {
                 }
             });
 
+            spinnerEditReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
 
+                    selectedSpinnerPosition = intent.getIntExtra(Data.KEY_PREVIOUS_ITEM, 0);
+                    initSpinner(myDude.getDudeType());
+                    propertySpinner.setSelection(selectedSpinnerPosition);
+
+
+                }
+            };
+            IntentFilter spinnerEditFilter = new IntentFilter(Data.KEY_SPINNER_EDIT);
+            getContext().registerReceiver(spinnerEditReceiver, spinnerEditFilter);
         }
 
         return rootView;
@@ -240,6 +265,36 @@ public class DudeFragment extends Fragment {
         if (descriptionEditText != null) {
             imm.hideSoftInputFromWindow(descriptionEditText.getWindowToken(), 0);
         }
+    }
+
+    private void initSpinner(String dudeTypeString) {
+        if (dudeTypeString.equalsIgnoreCase(DudeType.WHORE.toString())) {
+            if (Data.getWhoresSpinner().isEmpty()) {
+                spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.whores_string_array)));
+            }
+            else {
+                spinnerItemsList = new ArrayList<>(Data.getWhoresSpinner());
+            }
+            spinnerItemsList.add(getResources().getString(R.string.spinner_edit));
+            spinnerAdapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row_whore, R.id.spinner_row_textview_whore, spinnerItemsList, getLayoutInflater(), DudeType.WHORE);
+        }
+        else {
+            if (Data.getFreaksSpinner().isEmpty()) {
+                spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.freaks_string_array)));
+            }
+            else {
+                spinnerItemsList = new ArrayList<>(Data.getFreaksSpinner());
+            }
+            spinnerItemsList.add(getResources().getString(R.string.spinner_edit));
+            spinnerAdapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row_freak, R.id.spinner_row_textview_freak, spinnerItemsList, getLayoutInflater(), DudeType.FREAK);
+        }
+        propertySpinner.setAdapter(spinnerAdapter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getContext().unregisterReceiver(spinnerEditReceiver);
     }
 
 }

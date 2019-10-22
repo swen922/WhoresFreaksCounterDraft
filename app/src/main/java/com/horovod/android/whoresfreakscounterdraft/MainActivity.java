@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver createReceiver;
     private BroadcastReceiver editReceiver;
     private BroadcastReceiver deleteReceiver;
-    FragmentManager fragmentManager;
+    private BroadcastReceiver spinnerEditReceiver;
 
-    private final String KEY_FRAGMENT_CREATE = "KEY_FRAGMENT_CREATE";
+    private FragmentManager fragmentManager;
 
 
     // TODO видимо, в концепции андроида правильнее читать из XML каждый раз (?)
@@ -85,16 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 Bundle args = new Bundle();
                 args.putString(Data.KEY_DUDETYPE, DudeType.FREAK.toString());
                 Data.createFragment.setArguments(args);
-
-                int count = fragmentManager.getBackStackEntryCount();
-
-                if (count == 0) {
-                    ft.add(R.id.container_main, Data.createFragment, KEY_FRAGMENT_CREATE);
-                    ft.addToBackStack(KEY_FRAGMENT_CREATE);
-                }
-                else {
-                    ft.replace(R.id.container_main, Data.createFragment, KEY_FRAGMENT_CREATE);
-                }
+                ft.add(R.id.container_main, Data.createFragment, null);
                 ft.commit();
             }
         });
@@ -107,16 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 Bundle args = new Bundle();
                 args.putString(Data.KEY_DUDETYPE, DudeType.WHORE.toString());
                 Data.createFragment.setArguments(args);
-
-                int count = fragmentManager.getBackStackEntryCount();
-
-                if (count == 0) {
-                    ft.add(R.id.container_main, Data.createFragment, KEY_FRAGMENT_CREATE);
-                    ft.addToBackStack(KEY_FRAGMENT_CREATE);
-                }
-                else {
-                    ft.replace(R.id.container_main, Data.createFragment, KEY_FRAGMENT_CREATE);
-                }
+                ft.add(R.id.container_main, Data.createFragment, null);
                 ft.commit();
             }
         });
@@ -184,12 +166,24 @@ public class MainActivity extends AppCompatActivity {
                 updateCounters();
             }
         };
+        spinnerEditReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                Log.i("INSIDE MainActivity", "spinnerEditReceiver");
+
+                adapter.notifyDataSetChanged();
+            }
+        };
+
         IntentFilter intentFilterCreate = new IntentFilter(Data.KEY_CREATE_DUDE);
         registerReceiver(createReceiver, intentFilterCreate);
         IntentFilter intentFilterEdit = new IntentFilter(Data.KEY_UPDATE_DUDE);
         registerReceiver(editReceiver, intentFilterEdit);
         IntentFilter intentFilterDelete = new IntentFilter(Data.KEY_DELETE_DUDE);
         registerReceiver(deleteReceiver, intentFilterDelete);
+        IntentFilter spinnerEditFilter = new IntentFilter(Data.KEY_SPINNER_EDIT);
+        registerReceiver(spinnerEditReceiver, spinnerEditFilter);
 
     }
 
@@ -199,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
         unregisterReceiver(createReceiver);
         unregisterReceiver(editReceiver);
         unregisterReceiver(deleteReceiver);
+        unregisterReceiver(spinnerEditReceiver);
     }
 
     // override OnBackPressed() for to close DudeFragment first, if it's opened now

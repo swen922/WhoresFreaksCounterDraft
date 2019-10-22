@@ -37,6 +37,7 @@ public class CreateFragment extends Fragment {
 
     private String createDudeType;
     private List<String> spinnerItemsList = new ArrayList<>();
+    private ArrayAdapter<String> spinnerAdapter;
 
 
 
@@ -66,7 +67,6 @@ public class CreateFragment extends Fragment {
         });
 
         Bundle args = getArguments();
-        ArrayAdapter<String> adapter = null;
 
         if (args != null) {
             createDudeType = args.getString(Data.KEY_DUDETYPE);
@@ -80,7 +80,7 @@ public class CreateFragment extends Fragment {
                     // TODO изменить иницилизацию списка тут и ниже
                     spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.whores_string_array)));
                     spinnerItemsList.add(getResources().getString(R.string.spinner_edit));
-                    adapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row_whore, R.id.spinner_row_textview_whore, spinnerItemsList, getLayoutInflater(), DudeType.WHORE);
+                    spinnerAdapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row_whore, R.id.spinner_row_textview_whore, spinnerItemsList, getLayoutInflater(), DudeType.WHORE);
                 }
                 else {
                     headerTextView.setText(getResources().getString(R.string.add_freak2));
@@ -89,12 +89,11 @@ public class CreateFragment extends Fragment {
                     headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_freak));
                     spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.freaks_string_array)));
                     spinnerItemsList.add(getResources().getString(R.string.spinner_edit));
-                    adapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row_freak, R.id.spinner_row_textview_freak, spinnerItemsList, getLayoutInflater(), DudeType.FREAK);
+                    spinnerAdapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row_freak, R.id.spinner_row_textview_freak, spinnerItemsList, getLayoutInflater(), DudeType.FREAK);
                 }
             }
         }
-        propertySpinner.setAdapter(adapter);
-
+        propertySpinner.setAdapter(spinnerAdapter);
 
         descriptionEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -104,7 +103,6 @@ public class CreateFragment extends Fragment {
 
             }
         });
-
 
         descriptionEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override

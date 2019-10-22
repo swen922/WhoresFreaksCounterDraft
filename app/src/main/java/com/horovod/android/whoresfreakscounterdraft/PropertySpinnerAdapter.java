@@ -1,6 +1,7 @@
 package com.horovod.android.whoresfreakscounterdraft;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class PropertySpinnerAdapter extends ArrayAdapter<String> {
 
+    private Context myContext;
     private LayoutInflater inflater;
     private List<String> objectsList;
     private int textViewID;
@@ -20,6 +22,7 @@ public class PropertySpinnerAdapter extends ArrayAdapter<String> {
 
     public PropertySpinnerAdapter(Context context, int resource, int textViewResourceId, List<String> obj, LayoutInflater inflater, DudeType myDudeType) {
         super(context, resource, textViewResourceId, obj);
+        this.myContext = context;
         this.inflater = inflater;
         this.objectsList = new ArrayList<>(obj);
         this.textViewID = textViewResourceId;
@@ -55,6 +58,9 @@ public class PropertySpinnerAdapter extends ArrayAdapter<String> {
             textView = row.findViewById(R.id.spinner_row_textview_dropdown_freak);
         }
         textView.setText(objectsList.get(position));
+        if (objectsList.get(position).equalsIgnoreCase(myContext.getResources().getString(R.string.spinner_edit))) {
+            textView.setTypeface(null, Typeface.BOLD);
+        }
         return row;
     }
 }

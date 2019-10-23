@@ -1,5 +1,6 @@
 package com.horovod.android.whoresfreakscounterdraft;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -41,6 +42,8 @@ public class DudeFragment extends Fragment {
     private TextView dateTextView;
     private TextView promptTextView;
     private EditText descriptionEditText;
+    private ImageView shareImageView;
+    private ImageView deleteImageView;
     private Button cancelButton;
     private Button saveButton;
 
@@ -50,6 +53,8 @@ public class DudeFragment extends Fragment {
 
     private String selectedSpinnerItem = "";
     private int selectedSpinnerPosition = 0;
+    private String shareData = "";
+    private int dudeID = -1;
 
     private BroadcastReceiver spinnerEditReceiver;
 
@@ -70,6 +75,8 @@ public class DudeFragment extends Fragment {
         dateTextView = rootView.findViewById(R.id.dude_fragment_date_textview);
         promptTextView = rootView.findViewById(R.id.dude_fragment_prompt_info);
         descriptionEditText = rootView.findViewById(R.id.dude_fragment_edittext_info);
+        shareImageView = rootView.findViewById(R.id.dude_fragment_icon_share);
+        deleteImageView = rootView.findViewById(R.id.dude_fragment_icon_delete);
         cancelButton = rootView.findViewById(R.id.dude_fragment_cancel_button);
         saveButton = rootView.findViewById(R.id.dude_fragment_save_button);
 
@@ -82,7 +89,6 @@ public class DudeFragment extends Fragment {
 
         Bundle args = getArguments();
 
-        int dudeID = -1;
         if (args != null) {
             dudeID = args.getInt(Data.KEY_IDNUMBER, -1);
             if (dudeID >= 0) {
@@ -98,6 +104,8 @@ public class DudeFragment extends Fragment {
                 headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_whore));
                 indexTextView.setBackground(getResources().getDrawable(R.drawable.background_fragment_index_whore));
                 indexTextView.setTextColor(getResources().getColor(R.color.colorOrangeDark));
+                shareImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_share_24dp_red));
+                deleteImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_cancel_32dp_red));
                 initSpinner(myDude.getDudeType());
             }
             else {
@@ -107,6 +115,8 @@ public class DudeFragment extends Fragment {
                 headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_freak));
                 indexTextView.setBackground(getResources().getDrawable(R.drawable.background_fragment_index_freak));
                 indexTextView.setTextColor(getResources().getColor(R.color.colorBlueGrayDark));
+                shareImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_share_24dp_gray));
+                deleteImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_cancel_32dp_gray));
                 initSpinner(myDude.getDudeType());
             }
 
@@ -116,7 +126,6 @@ public class DudeFragment extends Fragment {
             dateTextView.setText(dt);
 
             propertySpinner.setSelection(myDude.getSpinnerSelectedPosition());
-
 
             descriptionEditText.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -157,6 +166,41 @@ public class DudeFragment extends Fragment {
                 promptTextView.setVisibility(View.INVISIBLE);
             }
 
+            shareData = getResources().getString(R.string.share_data);
+
+            shareImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                    StringBuilder sb = new StringBuilder(headerTextView.getText().toString().toUpperCase());
+                    sb.append(" - ").append(indexTextView.getText().toString()).append("\n");
+                    sb.append(propertySpinner.getSelectedItem().toString()).append("\n");
+                    sb.append(dateTextView.getText().toString()).append("\n");
+                    sb.append(descriptionEditText.getText().toString());
+                    intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+
+                    startActivity(Intent.createChooser(intent, shareData));
+                }
+            });
+
+            deleteImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    AlertDialogDelete dialog = new AlertDialogDelete();
+                    dialog.setCancelable(false);
+                    Bundle args = new Bundle();
+                    args.putInt(Data.KEY_IDNUMBER, dudeID);
+                    dialog.setArguments(args);
+                    dialog.show(getFragmentManager(), Data.KEY_DELETE_DUDE);
+
+                }
+            });
+
+
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -174,8 +218,7 @@ public class DudeFragment extends Fragment {
                 public void onClick(View v) {
                     String inputDescription = descriptionEditText.getText().toString();
                     inputDescription = Util.clearGaps(inputDescription);
-                    String inputSpinner = propertySpinner.getSelectedItem().toString();
-                    int spinnerPosition = getPositionOfSpinnerItem(inputSpinner);
+                    int spinnerPosition = getPositionOfSpinnerItem(propertySpinner.getSelectedItem().toString());
 
                     Intent intent = new Intent(Data.KEY_UPDATE_DUDE);
                     intent.putExtra(Data.KEY_IDNUMBER, dudeIDfin);
@@ -193,14 +236,13 @@ public class DudeFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-
                     if (spinnerItemsList.get(position).equalsIgnoreCase(getString(R.string.spinner_edit))) {
 
                         if (selectedSpinnerItem.isEmpty()) {
                             propertySpinner.setSelection(myDude.getSpinnerSelectedPosition());
                         }
                         else {
-                            propertySpinner.setSelection(getPositionOfSpinnerItem(selectedSpinnerItem));
+                            propertySpinner.setSelection(selectedSpinnerPosition);
                         }
 
                         FragmentManager fragmentManager = getFragmentManager();
@@ -210,7 +252,6 @@ public class DudeFragment extends Fragment {
                         Bundle args = new Bundle();
                         args.putString(Data.KEY_DUDETYPE, myDude.getDudeType());
                         if (!selectedSpinnerItem.isEmpty()) {
-                            selectedSpinnerItem = propertySpinner.getSelectedItem().toString();
                             args.putInt(Data.KEY_PREVIOUS_ITEM, selectedSpinnerPosition);
                         }
                         Data.spinnerEditFragment.setArguments(args);
@@ -222,10 +263,6 @@ public class DudeFragment extends Fragment {
                         selectedSpinnerItem = propertySpinner.getSelectedItem().toString();
                         selectedSpinnerPosition = getPositionOfSpinnerItem(propertySpinner.getSelectedItem().toString());
                     }
-
-                    Log.i("LOGGINGGG ||| ", "selectedSpinnerItem = " + selectedSpinnerItem);
-                    Log.i("LOGGINGGG ||| ", "selectedSpinnerPosition = " + selectedSpinnerPosition);
-
                 }
 
                 @Override
@@ -237,11 +274,9 @@ public class DudeFragment extends Fragment {
             spinnerEditReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-
                     selectedSpinnerPosition = intent.getIntExtra(Data.KEY_PREVIOUS_ITEM, 0);
                     initSpinner(myDude.getDudeType());
                     propertySpinner.setSelection(selectedSpinnerPosition);
-
 
                 }
             };
@@ -268,27 +303,41 @@ public class DudeFragment extends Fragment {
     }
 
     private void initSpinner(String dudeTypeString) {
-        if (dudeTypeString.equalsIgnoreCase(DudeType.WHORE.toString())) {
-            if (Data.getWhoresSpinner().isEmpty()) {
-                spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.whores_string_array)));
+
+        /*** В методе надо вызывать проверку привязки нашего фрашмента к фрагмент-менеджеру,
+         * иначе приложение валится с исключением
+         * Caused by: java.lang.IllegalStateException: onGetLayoutInflater()
+         * cannot be executed until the Fragment is attached to the FragmentManager.
+         * то есть строчки
+         * Activity activity = getActivity();
+         *         if (isAdded() && activity != null)*/
+
+        Activity activity = getActivity();
+
+        if (isAdded() && activity != null) {
+
+            if (dudeTypeString.equalsIgnoreCase(DudeType.WHORE.toString())) {
+                if (Data.getWhoresSpinner().isEmpty()) {
+                    spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.whores_string_array)));
+                }
+                else {
+                    spinnerItemsList = new ArrayList<>(Data.getWhoresSpinner());
+                }
+                spinnerItemsList.add(getResources().getString(R.string.spinner_edit));
+                spinnerAdapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row_whore, R.id.spinner_row_textview_whore, spinnerItemsList, getLayoutInflater(), DudeType.WHORE);
             }
             else {
-                spinnerItemsList = new ArrayList<>(Data.getWhoresSpinner());
+                if (Data.getFreaksSpinner().isEmpty()) {
+                    spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.freaks_string_array)));
+                }
+                else {
+                    spinnerItemsList = new ArrayList<>(Data.getFreaksSpinner());
+                }
+                spinnerItemsList.add(getResources().getString(R.string.spinner_edit));
+                spinnerAdapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row_freak, R.id.spinner_row_textview_freak, spinnerItemsList, getLayoutInflater(), DudeType.FREAK);
             }
-            spinnerItemsList.add(getResources().getString(R.string.spinner_edit));
-            spinnerAdapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row_whore, R.id.spinner_row_textview_whore, spinnerItemsList, getLayoutInflater(), DudeType.WHORE);
+            propertySpinner.setAdapter(spinnerAdapter);
         }
-        else {
-            if (Data.getFreaksSpinner().isEmpty()) {
-                spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.freaks_string_array)));
-            }
-            else {
-                spinnerItemsList = new ArrayList<>(Data.getFreaksSpinner());
-            }
-            spinnerItemsList.add(getResources().getString(R.string.spinner_edit));
-            spinnerAdapter = new PropertySpinnerAdapter(getContext(), R.layout.spinner_row_freak, R.id.spinner_row_textview_freak, spinnerItemsList, getLayoutInflater(), DudeType.FREAK);
-        }
-        propertySpinner.setAdapter(spinnerAdapter);
     }
 
     @Override

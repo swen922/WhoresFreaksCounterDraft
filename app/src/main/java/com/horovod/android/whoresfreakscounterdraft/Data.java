@@ -30,8 +30,6 @@ public class Data {
     public static final String KEY_PREVIOUS_ITEM = "whoresfreakscounterdraft_KEY_PREVIOUS_ITEM";
 
 
-
-
     public static CreateFragment createFragment;
     public static DudeFragment dudeFragment;
     public static SpinnerEditFragment spinnerEditFragment;

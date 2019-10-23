@@ -17,6 +17,8 @@
     <string name="info_prompt">Напишите здесь дополнительную информацию, если пожелаете</string>
     <string name="dude_date_time">Добавлено в список:</string>
 
+    <string name="share_data">Отправить данные</string>
+
     <string name="button_save">Сохранить</string>
     <string name="button_cancel">Отмена</string>
     <string name="button_delete">Удалить</string>
@@ -49,10 +51,11 @@
     <string name="spinner_edit_prompt">Впишите ваши варианты характеристик.\nНе более 25 символов.</string>
     <string name="spinner_edit_item_prompt">Впишите ваш вариант характеристики.\nНе более 25 символов.</string>
 
-
     <string name="delete_alert">Удалить из списка пункт</string>
     <string name="delete_success">Успешно удален из списка пункт</string>
     <string name="delete_fail">Не удалось удалить из списка пункт</string>
+
+    <string name="empty_spinner_item">Нельзя оставлять пункт характеристики пустым!\nВозвращено прежнее значение</string>
 
 
 

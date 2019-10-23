@@ -88,34 +88,17 @@ public class SpinnerEditFragment extends Fragment {
                 topColorYexyView.setBackground(getContext().getResources().getDrawable(R.drawable.background_fragment_spinner_edit_top_whore));
                 topColorYexyView.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
                 background.setBackground(getResources().getDrawable(R.drawable.background_fragment_spinner_edit_whore));
-                if (Data.getWhoresSpinner().isEmpty()) {
-                    spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.whores_string_array)));
-                }
-                else {
-                    spinnerItemsList = new ArrayList<>(Data.getWhoresSpinner());
-                }
+                initSpinnerItems();
                 revertItems.setTextColor(getResources().getColor(R.color.colorPrimaryMedium));
             }
             else {
                 topColorYexyView.setBackground(getContext().getResources().getDrawable(R.drawable.background_fragment_spinner_edit_top_freak));
                 headerTextView.setTextColor(getResources().getColor(R.color.colorBlueGrayLight));
                 background.setBackground(getResources().getDrawable(R.drawable.background_fragment_spinner_edit_freak));
-                if (Data.getFreaksSpinner().isEmpty()) {
-                    spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.freaks_string_array)));
-                }
-                else {
-                    spinnerItemsList = new ArrayList<>(Data.getFreaksSpinner());
-                }
+                initSpinnerItems();
                 revertItems.setTextColor(getResources().getColor(R.color.colorBlueGrayPrimary));
             }
 
-            itemEditText0.setText(spinnerItemsList.get(0));
-            itemEditText1.setText(spinnerItemsList.get(1));
-            itemEditText2.setText(spinnerItemsList.get(2));
-            itemEditText3.setText(spinnerItemsList.get(3));
-            itemEditText4.setText(spinnerItemsList.get(4));
-            itemEditText5.setText(spinnerItemsList.get(5));
-            itemEditText6.setText(spinnerItemsList.get(6));
 
             itemEditText0.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -202,6 +185,27 @@ public class SpinnerEditFragment extends Fragment {
         IntentFilter intentFilterSpinnerItem = new IntentFilter(Data.KEY_SPINNER_UPDATE_ITEM);
         getContext().registerReceiver(spinnerItemReceiver, intentFilterSpinnerItem);
 
+        revertItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dudeTypeString != null && !dudeTypeString.isEmpty()) {
+                    if (dudeTypeString.equalsIgnoreCase(DudeType.WHORE.toString())) {
+                        spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.whores_string_array)));
+                    }
+                    else {
+                        spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.freaks_string_array)));
+                    }
+                    itemEditText0.setText(spinnerItemsList.get(0));
+                    itemEditText1.setText(spinnerItemsList.get(1));
+                    itemEditText2.setText(spinnerItemsList.get(2));
+                    itemEditText3.setText(spinnerItemsList.get(3));
+                    itemEditText4.setText(spinnerItemsList.get(4));
+                    itemEditText5.setText(spinnerItemsList.get(5));
+                    itemEditText6.setText(spinnerItemsList.get(6));
+                }
+            }
+        });
+
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -259,6 +263,35 @@ public class SpinnerEditFragment extends Fragment {
 
         ft.add(R.id.container_main, Data.spinnerEditItemFragment, null);
         ft.commit();
+    }
+
+    private void initSpinnerItems() {
+        if (dudeTypeString != null && !dudeTypeString.isEmpty()) {
+            if (dudeTypeString.equalsIgnoreCase(DudeType.WHORE.toString())) {
+                if (Data.getWhoresSpinner().isEmpty()) {
+                    spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.whores_string_array)));
+                }
+                else {
+                    spinnerItemsList = new ArrayList<>(Data.getWhoresSpinner());
+                }
+            }
+            else {
+                if (Data.getFreaksSpinner().isEmpty()) {
+                    spinnerItemsList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.freaks_string_array)));
+                }
+                else {
+                    spinnerItemsList = new ArrayList<>(Data.getFreaksSpinner());
+                }
+            }
+
+            itemEditText0.setText(spinnerItemsList.get(0));
+            itemEditText1.setText(spinnerItemsList.get(1));
+            itemEditText2.setText(spinnerItemsList.get(2));
+            itemEditText3.setText(spinnerItemsList.get(3));
+            itemEditText4.setText(spinnerItemsList.get(4));
+            itemEditText5.setText(spinnerItemsList.get(5));
+            itemEditText6.setText(spinnerItemsList.get(6));
+        }
     }
 
     @Override

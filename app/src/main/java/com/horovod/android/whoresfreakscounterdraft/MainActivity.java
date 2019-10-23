@@ -152,13 +152,12 @@ public class MainActivity extends AppCompatActivity {
                     boolean result = Data.removeDude(id);
                     if (result) {
                         Toast.makeText(getApplicationContext(), getString(R.string.delete_success) + " " + (size - id), Toast.LENGTH_LONG).show();
+                        loader.writeBaseToJSON();
+                        adapter.notifyDataSetChanged();
                     }
                     else {
                         Toast.makeText(getApplicationContext(), getString(R.string.delete_fail) + " " + (size - id), Toast.LENGTH_LONG).show();
                     }
-                    loader.writeBaseToJSON();
-                    adapter.notifyDataSetChanged();
-
                 }
                 else {
                     Toast.makeText(getApplicationContext(), getString(R.string.delete_fail) + " " + (size - id), Toast.LENGTH_LONG).show();

@@ -71,7 +71,8 @@
     <EditText
         android:id="@+id/spinner_edit_item_fragment_edittext"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
+        android:maxHeight="100dp"
         android:background="@drawable/background_fragment_spinner_edit_textfield"
         android:inputType="textCapSentences"
         android:maxLength="25"
@@ -96,7 +97,7 @@
     <TextView
         android:id="@+id/spinner_edit_item_fragment_revert"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="70dp"
         android:text="@string/spinner_item_revert"
         android:textAllCaps="true"
         android:textStyle="bold"
@@ -108,7 +109,7 @@
         android:gravity="center"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="24dp"
         android:maxLines="2"
         app:autoSizeTextType="uniform"
         app:layout_constraintTop_toBottomOf="@id/spinner_edit_item_fragment_edittext"

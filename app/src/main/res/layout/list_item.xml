@@ -104,14 +104,32 @@
         />
 
     <TextView
+        android:id="@+id/list_item_textView_spinner"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:alpha="0.8"
+        android:textStyle="bold"
+        android:maxLines="1"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintTop_toBottomOf="@id/list_item__guide_horiz1"
+        app:layout_constraintLeft_toLeftOf="@+id/list_item__guide1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/list_item_textView_description"
+        />
+
+    <TextView
         android:id="@+id/list_item_textView_description"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:textSize="17sp"
+        android:textSize="16sp"
         android:alpha="0.8"
-        app:layout_constraintTop_toBottomOf="@id/list_item__guide_horiz1"
+        app:layout_constraintVertical_weight="1.3"
+        app:layout_constraintTop_toBottomOf="@id/list_item_textView_spinner"
         app:layout_constraintLeft_toLeftOf="@+id/list_item__guide1"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

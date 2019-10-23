@@ -43,12 +43,13 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
         if (convertView == null) {
             viewHolder = new DudeAdapter.ViewHolder();
             convertView = inflater.inflate(resourceID, parent, false);
-            viewHolder.colorPosition = (TextView) convertView.findViewById(R.id.list_item_color_idnumber);
-            viewHolder.positionTextView = (TextView) convertView.findViewById(R.id.list_item_textView_idnumber);
-            viewHolder.headerTextView = (TextView) convertView.findViewById(R.id.list_item_textView_description_header);
-            viewHolder.colorDescription = (TextView) convertView.findViewById(R.id.list_item_color_description);
-            viewHolder.descriptionTextView = (TextView) convertView.findViewById(R.id.list_item_textView_description);
-            viewHolder.deleteCrossImageView = (ImageView) convertView.findViewById(R.id.list_item_delete_cross);
+            viewHolder.colorPosition = convertView.findViewById(R.id.list_item_color_idnumber);
+            viewHolder.positionTextView = convertView.findViewById(R.id.list_item_textView_idnumber);
+            viewHolder.headerTextView = convertView.findViewById(R.id.list_item_textView_description_header);
+            viewHolder.deleteCrossImageView = convertView.findViewById(R.id.list_item_delete_cross);
+            viewHolder.colorDescription = convertView.findViewById(R.id.list_item_color_description);
+            viewHolder.spinnerTextView = convertView.findViewById(R.id.list_item_textView_spinner);
+            viewHolder.descriptionTextView = convertView.findViewById(R.id.list_item_textView_description);
             convertView.setTag(viewHolder);
         }
         else {
@@ -86,7 +87,8 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
 
         int size = Data.getDudes().size();
         viewHolder.positionTextView.setText(String.valueOf(size - position));
-        viewHolder.descriptionTextView.setText(spinnerSelected + "\n" + descr);
+        viewHolder.spinnerTextView.setText(spinnerSelected);
+        viewHolder.descriptionTextView.setText(descr);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,9 +125,12 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
     public class ViewHolder {
         TextView colorPosition;
         TextView positionTextView;
-        TextView colorDescription;
-        TextView descriptionTextView;
         TextView headerTextView;
         ImageView deleteCrossImageView;
+        TextView colorDescription;
+        TextView spinnerTextView;
+        TextView descriptionTextView;
+
+
     }
 }

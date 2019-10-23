@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,7 +67,6 @@ public class SpinnerEditItemFragment extends Fragment {
             dudeTypeString = args.getString(Data.KEY_DUDETYPE);
             itemPosition = args.getInt(Data.KEY_IDNUMBER, 0);
             currentItem = args.getString(Data.KEY_SPINNER_EDIT_ITEM);
-
         }
 
         if (dudeTypeString != null && !dudeTypeString.isEmpty()) {
@@ -118,12 +118,18 @@ public class SpinnerEditItemFragment extends Fragment {
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Data.KEY_SPINNER_UPDATE_ITEM);
-                    intent.putExtra(Data.KEY_IDNUMBER, itemPosition);
-                    String newItem = itemEditText.getText().toString();
-                    newItem = Util.clearGaps(newItem);
-                    intent.putExtra(Data.KEY_SPINNER_ITEM, newItem);
-                    getActivity().sendBroadcast(intent);
+
+                    if(itemEditText.getText().toString().isEmpty()) {
+                        Toast.makeText(getContext(), getResources().getString(R.string.empty_spinner_item), Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Intent intent = new Intent(Data.KEY_SPINNER_UPDATE_ITEM);
+                        intent.putExtra(Data.KEY_IDNUMBER, itemPosition);
+                        String newItem = itemEditText.getText().toString();
+                        newItem = Util.clearGaps(newItem);
+                        intent.putExtra(Data.KEY_SPINNER_ITEM, newItem);
+                        getActivity().sendBroadcast(intent);
+                    }
 
                     getActivity().getSupportFragmentManager().beginTransaction().remove(Data.spinnerEditItemFragment).commit();
                     closeKeyboard();

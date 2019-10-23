@@ -112,7 +112,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dude_fragment_spinner_property"
-        app:layout_constraintBottom_toTopOf="@id/dude_fragment_edittext_info"
+
         />
 
 
@@ -120,7 +120,7 @@
         android:id="@+id/dude_fragment_edittext_info"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:inputType="textCapSentences"
+        android:inputType="textCapSentences|textMultiLine"
         android:layout_marginBottom="8dp"
         android:gravity="top"
         android:paddingLeft="12dp"
@@ -128,7 +128,33 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dude_fragment_date_textview"
+        app:layout_constraintBottom_toTopOf="@id/dude_fragment_icon_share"
+        />
+
+    <ImageView
+        android:id="@+id/dude_fragment_icon_share"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_share_24dp_red"
+        android:scaleType="centerCrop"
+        android:layout_margin="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/dude_fragment_icon_delete"
+        app:layout_constraintTop_toBottomOf="@id/dude_fragment_edittext_info"
         app:layout_constraintBottom_toTopOf="@id/dude_fragment_cancel_button"
+        />
+
+    <ImageView
+        android:id="@+id/dude_fragment_icon_delete"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_cancel_32dp_red"
+        android:scaleType="centerCrop"
+        android:layout_margin="16dp"
+        app:layout_constraintLeft_toLeftOf="@id/dude_fragment_icon_share"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/dude_fragment_icon_share"
+        app:layout_constraintBottom_toBottomOf="@id/dude_fragment_icon_share"
         />
 
     <Button
@@ -141,6 +167,7 @@
         android:layout_marginBottom="8dp"
         android:maxLines="1"
         app:autoSizeTextType="uniform"
+        app:layout_constraintTop_toBottomOf="@id/dude_fragment_icon_share"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="@id/dude_fragment_guide_vertical_50"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -156,6 +183,7 @@
         android:layout_marginBottom="8dp"
         android:maxLines="1"
         app:autoSizeTextType="uniform"
+        app:layout_constraintTop_toTopOf="@id/dude_fragment_cancel_button"
         app:layout_constraintLeft_toLeftOf="@id/dude_fragment_guide_vertical_50"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

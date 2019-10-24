@@ -52,10 +52,11 @@
         android:textColor="@color/colorPrimaryLight"
         android:textStyle="bold"
         android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         android:maxLines="1"
         app:autoSizeTextType="uniform"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/dude_fragment_textview_index"
         app:layout_constraintTop_toTopOf="parent"
         />
 

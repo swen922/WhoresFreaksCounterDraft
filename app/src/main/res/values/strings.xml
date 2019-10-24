@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Счетчик наркоманов и проституток</string>
 
+    <string name="menu_clear">Удалить всё</string>
+    <string name="list_clear_confirm">Удалить весь список проституток и наркоманов?</string>
+
     <string name="list_item_text_date">Дата и время</string>
 
     <string name="list_item_whore">Проститутка</string>
@@ -48,14 +51,15 @@
     <string name="spinner_item_revert">Вернуть значение этого пункта по умолчанию</string>
 
     <string name="spinner_edit_header">Редактирование характеристик</string>
-    <string name="spinner_edit_prompt">Впишите ваши варианты характеристик.\nНе более 25 символов.</string>
-    <string name="spinner_edit_item_prompt">Впишите ваш вариант характеристики.\nНе более 25 символов.</string>
+    <string name="spinner_edit_prompt">Впишите ваши варианты характеристик</string>
+    <string name="spinner_edit_item_prompt">Впишите ваш вариант.\nНе более 25 символов</string>
 
     <string name="delete_alert">Удалить из списка пункт</string>
     <string name="delete_success">Успешно удален из списка пункт</string>
     <string name="delete_fail">Не удалось удалить из списка пункт</string>
 
     <string name="empty_spinner_item">Нельзя оставлять пункт характеристики пустым!\nВозвращено прежнее значение</string>
+
 
 
 

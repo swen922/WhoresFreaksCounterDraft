@@ -99,7 +99,14 @@ public class SpinnerEditItemFragment extends Fragment {
             revertItemTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String baseItem = getResources().getStringArray(R.array.whores_string_array)[itemPosition];
+
+                    String baseItem = "";
+                    if (dudeTypeString.equalsIgnoreCase(DudeType.WHORE.toString())) {
+                        baseItem = getResources().getStringArray(R.array.whores_string_array)[itemPosition];
+                    }
+                    else {
+                        baseItem = getResources().getStringArray(R.array.freaks_string_array)[itemPosition];
+                    }
                     itemEditText.setText(baseItem);
                     hasTouching = false;
                 }

@@ -103,6 +103,8 @@ public class CreateFragment extends Fragment {
 
                         if (spinnerItemsList.get(position).equalsIgnoreCase(getString(R.string.spinner_edit))) {
 
+                            closeKeyboard();
+
                             if (selectedSpinnerItem.isEmpty()) {
                                 propertySpinner.setSelection(0);
                             }

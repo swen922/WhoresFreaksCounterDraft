@@ -238,6 +238,8 @@ public class DudeFragment extends Fragment {
 
                     if (spinnerItemsList.get(position).equalsIgnoreCase(getString(R.string.spinner_edit))) {
 
+                        closeKeyboard();
+
                         if (selectedSpinnerItem.isEmpty()) {
                             propertySpinner.setSelection(myDude.getSpinnerSelectedPosition());
                         }

@@ -195,7 +195,7 @@ public class DudeFragment extends Fragment {
                     Bundle args = new Bundle();
                     args.putInt(Data.KEY_IDNUMBER, dudeID);
                     dialog.setArguments(args);
-                    dialog.show(getFragmentManager(), Data.KEY_DELETE_DUDE);
+                    dialog.show(getFragmentManager(), null);
 
                 }
             });
@@ -283,7 +283,7 @@ public class DudeFragment extends Fragment {
                 }
             };
             IntentFilter spinnerEditFilter = new IntentFilter(Data.KEY_SPINNER_EDIT);
-            getContext().registerReceiver(spinnerEditReceiver, spinnerEditFilter);
+            getActivity().registerReceiver(spinnerEditReceiver, spinnerEditFilter);
         }
 
         return rootView;
@@ -345,7 +345,7 @@ public class DudeFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getContext().unregisterReceiver(spinnerEditReceiver);
+        getActivity().unregisterReceiver(spinnerEditReceiver);
     }
 
 }

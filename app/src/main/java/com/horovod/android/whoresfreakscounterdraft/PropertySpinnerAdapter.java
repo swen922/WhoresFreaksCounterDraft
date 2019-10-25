@@ -60,6 +60,12 @@ public class PropertySpinnerAdapter extends ArrayAdapter<String> {
         textView.setText(objectsList.get(position));
         if (objectsList.get(position).equalsIgnoreCase(myContext.getResources().getString(R.string.spinner_edit))) {
             textView.setTypeface(null, Typeface.BOLD);
+            if (myDudeType.equals(DudeType.WHORE)) {
+                textView.setTextColor(myContext.getResources().getColor(R.color.colorAccent));
+            }
+            else {
+                textView.setTextColor(myContext.getResources().getColor(R.color.colorBlueGrayAccent));
+            }
         }
         return row;
     }

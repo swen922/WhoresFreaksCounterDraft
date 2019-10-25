@@ -2,7 +2,7 @@
     <string name="app_name">Счетчик наркоманов и проституток</string>
 
     <string name="menu_clear">Удалить всё</string>
-    <string name="list_clear_confirm">Удалить весь список проституток и наркоманов?</string>
+    <string name="list_clear_confirm">Удалить весь список?</string>
 
     <string name="list_item_text_date">Дата и время</string>
 

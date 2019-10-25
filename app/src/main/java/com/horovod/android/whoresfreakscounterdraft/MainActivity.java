@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver editReceiver;
     private BroadcastReceiver deleteReceiver;
     private BroadcastReceiver spinnerEditReceiver;
+    private BroadcastReceiver clearListReceiver;
 
     private FragmentManager fragmentManager;
 
@@ -169,9 +171,34 @@ public class MainActivity extends AppCompatActivity {
         spinnerEditReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                adapter.notifyDataSetChanged();
+            }
+        };
 
-                Log.i("INSIDE MainActivity", "spinnerEditReceiver");
+        clearListReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
 
+                if (Data.spinnerEditItemFragment != null) {
+                    fragmentManager.beginTransaction().remove(Data.spinnerEditItemFragment).commit();
+                    Data.spinnerEditItemFragment = null;
+                }
+                if (Data.spinnerEditFragment != null) {
+                    fragmentManager.beginTransaction().remove(Data.spinnerEditFragment).commit();
+                    Data.spinnerEditFragment = null;
+                }
+                if (Data.createFragment != null) {
+                    fragmentManager.beginTransaction().remove(Data.createFragment).commit();
+                    Data.createFragment = null;
+                }
+                if (Data.dudeFragment != null) {
+                    fragmentManager.beginTransaction().remove(Data.dudeFragment).commit();
+                    Data.dudeFragment = null;
+                }
+
+                Data.clearDudes();
+                updateCounters();
+                loader.writeBaseToJSON();
                 adapter.notifyDataSetChanged();
             }
         };
@@ -184,7 +211,8 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(deleteReceiver, intentFilterDelete);
         IntentFilter spinnerEditFilter = new IntentFilter(Data.KEY_SPINNER_EDIT);
         registerReceiver(spinnerEditReceiver, spinnerEditFilter);
-
+        IntentFilter intentFilterClear = new IntentFilter(Data.KEY_CLEAR_LIST);
+        registerReceiver(clearListReceiver, intentFilterClear);
     }
 
     @Override
@@ -194,6 +222,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void onClickMenuDelete(MenuItem item) {
+        AlertDialogClear dialogClear = new AlertDialogClear();
+        dialogClear.setCancelable(false);
+        dialogClear.show(getSupportFragmentManager(), null);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -201,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
         unregisterReceiver(editReceiver);
         unregisterReceiver(deleteReceiver);
         unregisterReceiver(spinnerEditReceiver);
+        unregisterReceiver(clearListReceiver);
     }
 
     // override OnBackPressed() for to close DudeFragment first, if it's opened now

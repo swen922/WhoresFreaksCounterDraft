@@ -19,6 +19,7 @@ public class Data {
     public static final String KEY_CREATE_DUDE = "whoresfreakscounterdraft_KEY_CREATE_DUDE";
     public static final String KEY_UPDATE_DUDE = "whoresfreakscounterdraft_KEY_UPDATE_DUDE";
     public static final String KEY_DELETE_DUDE = "whoresfreakscounterdraft_KEY_DELETE_DUDE";
+    public static final String KEY_CLEAR_LIST = "whoresfreakscounterdraft_KEY_CLEAR_LIST";
     public static final String KEY_IDNUMBER = "whoresfreakscounterdraft_KEY_IDNUMBER";
     public static final String KEY_DESCRIPTION = "whoresfreakscounterdraft_KEY_DESCRIPTION";
     public static final String KEY_SPINNER = "whoresfreakscounterdraft_KEY_SPINNER";
@@ -90,6 +91,10 @@ public class Data {
 
     public static void setDudes(List<Dude> newDudes) {
         Data.dudes = new LinkedList<>(newDudes);
+    }
+
+    public static void clearDudes() {
+        Data.dudes.clear();
     }
 
     public static List<String> getWhoresSpinner() {

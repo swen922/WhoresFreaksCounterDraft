@@ -112,7 +112,7 @@ public class DudeAdapter extends ArrayAdapter<Dude> {
                 Bundle args = new Bundle();
                 args.putInt(Data.KEY_IDNUMBER, position);
                 dialog.setArguments(args);
-                dialog.show(fragmentManager, Data.KEY_DELETE_DUDE);
+                dialog.show(fragmentManager, null);
 
             }
         });

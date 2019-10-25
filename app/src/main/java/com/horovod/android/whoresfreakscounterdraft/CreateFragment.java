@@ -211,15 +211,14 @@ public class CreateFragment extends Fragment {
                     }
                 };
                 IntentFilter spinnerEditFilter = new IntentFilter(Data.KEY_SPINNER_EDIT);
-                getContext().registerReceiver(spinnerEditReceiver, spinnerEditFilter);
+                getActivity().registerReceiver(spinnerEditReceiver, spinnerEditFilter);
 
             }
         }
 
-
-
         return rootView;
     }
+
 
     private int getPositionOfSpinnerItem(String line) {
         int selected = spinnerItemsList.indexOf(line);
@@ -273,5 +272,11 @@ public class CreateFragment extends Fragment {
             propertySpinner.setAdapter(spinnerAdapter);
 
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(spinnerEditReceiver);
     }
 }

@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,6 +36,7 @@ import java.util.List;
 public class DudeFragment extends Fragment {
 
     private TextView background;
+    private TextView backgroundLeft;
     private TextView headerColor;
     private TextView headerTextView;
     private TextView indexTextView;
@@ -97,11 +99,21 @@ public class DudeFragment extends Fragment {
         }
 
         if (myDude != null) {
+
             if (myDude.getDudeType().equals(DudeType.WHORE.toString())) {
                 headerTextView.setText(getResources().getString(R.string.list_item_whore));
                 headerTextView.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
                 background.setBackground(getResources().getDrawable(R.drawable.background_fragment_whore));
-                headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_whore));
+
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_whore));
+                }
+                else {
+                    backgroundLeft = rootView.findViewById(R.id.land_dude_fragment_background_left);
+                    backgroundLeft.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_left_whore));
+                    headerColor.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_top_whore));
+                }
+
                 indexTextView.setBackground(getResources().getDrawable(R.drawable.background_fragment_index_whore));
                 indexTextView.setTextColor(getResources().getColor(R.color.colorOrangeDark));
                 shareImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_share_24dp_red));
@@ -112,7 +124,16 @@ public class DudeFragment extends Fragment {
                 headerTextView.setText(getResources().getString(R.string.list_item_freak));
                 headerTextView.setTextColor(getResources().getColor(R.color.colorBlueGrayLight));
                 background.setBackground(getResources().getDrawable(R.drawable.background_fragment_freak));
-                headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_freak));
+
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_freak));
+                }
+                else {
+                    backgroundLeft = rootView.findViewById(R.id.land_dude_fragment_background_left);
+                    backgroundLeft.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_left_freak));
+                    headerColor.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_top_freak));
+                }
+
                 indexTextView.setBackground(getResources().getDrawable(R.drawable.background_fragment_index_freak));
                 indexTextView.setTextColor(getResources().getColor(R.color.colorBlueGrayDark));
                 shareImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_share_24dp_gray));

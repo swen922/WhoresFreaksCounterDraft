@@ -63,7 +63,6 @@
         app:layout_constraintTop_toBottomOf="@id/dude_create_textview_header"
         />
 
-
     <Spinner
         android:id="@+id/dude_create_spinner_property"
         android:layout_width="0dp"
@@ -73,7 +72,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dude_create_spinner_prompt"
         />
-
 
     <TextView
         android:id="@+id/dude_create_prompt_info"

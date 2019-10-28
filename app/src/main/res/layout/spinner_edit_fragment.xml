@@ -54,7 +54,6 @@
         />
 
 
-
     <TextView
         android:id="@+id/spinner_edit_fragment_edittext0"
         android:layout_width="match_parent"

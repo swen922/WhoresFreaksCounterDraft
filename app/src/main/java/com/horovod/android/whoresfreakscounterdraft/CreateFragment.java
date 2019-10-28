@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -33,6 +34,7 @@ public class CreateFragment extends Fragment {
 
 
     private TextView background;
+    private TextView backgroundLeft;
     private TextView headerColor;
     private TextView headerTextView;
     private TextView spinnerPromptTextView;
@@ -86,14 +88,32 @@ public class CreateFragment extends Fragment {
                     headerTextView.setText(getResources().getString(R.string.add_whore2));
                     headerTextView.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
                     background.setBackground(getResources().getDrawable(R.drawable.background_fragment_whore));
-                    headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_whore));
+
+                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_whore));
+                    }
+                    else {
+                        backgroundLeft = rootView.findViewById(R.id.land_dude_create_background_left);
+                        backgroundLeft.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_left_whore));
+                        headerColor.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_top_whore));
+                    }
+
                     initSpinner(createDudeType);
                 }
                 else {
                     headerTextView.setText(getResources().getString(R.string.add_freak2));
                     headerTextView.setTextColor(getResources().getColor(R.color.colorBlueGrayLight));
                     background.setBackground(getResources().getDrawable(R.drawable.background_fragment_freak));
-                    headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_freak));
+
+                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_freak));
+                    }
+                    else {
+                        backgroundLeft = rootView.findViewById(R.id.land_dude_create_background_left);
+                        backgroundLeft.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_left_freak));
+                        headerColor.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_top_freak));
+                    }
+
                     initSpinner(createDudeType);
                 }
 

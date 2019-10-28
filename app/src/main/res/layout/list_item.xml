@@ -86,7 +86,7 @@
         android:maxLines="1"
         app:autoSizeTextType="uniform"
         app:layout_constraintLeft_toLeftOf="@+id/list_item__guide1"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/list_item_delete_cross"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/list_item__guide_horiz1"
         />

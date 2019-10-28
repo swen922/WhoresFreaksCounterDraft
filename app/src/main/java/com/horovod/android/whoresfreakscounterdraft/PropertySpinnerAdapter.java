@@ -1,7 +1,9 @@
 package com.horovod.android.whoresfreakscounterdraft;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
+import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +35,11 @@ public class PropertySpinnerAdapter extends ArrayAdapter<String> {
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = null;
         TextView textView = null;
+
+
+        /** Не показывает закругленный угол */
+
+
         if (myDudeType.equals(DudeType.WHORE)) {
             row = inflater.inflate(R.layout.spinner_row_whore, parent, false);
             textView = row.findViewById(textViewID);

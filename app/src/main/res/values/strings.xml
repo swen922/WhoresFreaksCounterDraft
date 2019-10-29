@@ -48,6 +48,7 @@
 
     <string name="spinner_edit">РЕДАКТИРОВАТЬ СПИСОК</string>
     <string name="spinner_revert">Вернуть значения\nпо умолчанию</string>
+    <string name="land_spinner_revert">Вернуть значения по умолчанию</string>
     <string name="spinner_item_revert">Вернуть значение этого пункта по умолчанию</string>
 
     <string name="spinner_edit_header">Редактирование характеристик</string>

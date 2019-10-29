@@ -63,8 +63,8 @@ public class CreateFragment extends Fragment {
         Data.createFragment = this;
 
         background = rootView.findViewById(R.id.dude_create_background);
-        headerColor = rootView.findViewById(R.id.dude_create_color_header);
-        headerTextView = rootView.findViewById(R.id.dude_create_textview_header);
+        //headerColor = rootView.findViewById(R.id.dude_create_color_header);
+        //headerTextView = rootView.findViewById(R.id.dude_create_textview_header);
         spinnerPromptTextView = rootView.findViewById(R.id.dude_create_spinner_prompt);
         propertySpinner = rootView.findViewById(R.id.dude_create_spinner_property);
         infoPromptTextView = rootView.findViewById(R.id.dude_create_prompt_info);
@@ -85,33 +85,37 @@ public class CreateFragment extends Fragment {
             createDudeType = args.getString(Data.KEY_DUDETYPE);
             if (createDudeType != null && !createDudeType.isEmpty()) {
                 if (createDudeType.equalsIgnoreCase(DudeType.WHORE.toString())) {
-                    headerTextView.setText(getResources().getString(R.string.add_whore2));
-                    headerTextView.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
                     background.setBackground(getResources().getDrawable(R.drawable.background_fragment_whore));
 
                     if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        headerColor = rootView.findViewById(R.id.dude_create_color_header);
+                        headerTextView = rootView.findViewById(R.id.dude_create_textview_header);
+                        headerTextView.setText(getResources().getString(R.string.add_whore2));
+                        headerTextView.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
                         headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_whore));
                     }
                     else {
                         backgroundLeft = rootView.findViewById(R.id.land_dude_create_background_left);
                         backgroundLeft.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_left_whore));
-                        headerColor.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_top_whore));
+                        //headerColor.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_top_whore));
                     }
 
                     initSpinner(createDudeType);
                 }
                 else {
-                    headerTextView.setText(getResources().getString(R.string.add_freak2));
-                    headerTextView.setTextColor(getResources().getColor(R.color.colorBlueGrayLight));
                     background.setBackground(getResources().getDrawable(R.drawable.background_fragment_freak));
 
                     if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        headerColor = rootView.findViewById(R.id.dude_create_color_header);
+                        headerTextView = rootView.findViewById(R.id.dude_create_textview_header);
+                        headerTextView.setText(getResources().getString(R.string.add_freak2));
+                        headerTextView.setTextColor(getResources().getColor(R.color.colorBlueGrayLight));
                         headerColor.setBackground(getResources().getDrawable(R.drawable.background_fragment_top_freak));
                     }
                     else {
                         backgroundLeft = rootView.findViewById(R.id.land_dude_create_background_left);
                         backgroundLeft.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_left_freak));
-                        headerColor.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_top_freak));
+                        //headerColor.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_top_freak));
                     }
 
                     initSpinner(createDudeType);

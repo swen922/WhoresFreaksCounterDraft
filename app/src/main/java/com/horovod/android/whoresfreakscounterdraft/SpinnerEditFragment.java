@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,7 +27,7 @@ import java.util.List;
 public class SpinnerEditFragment extends Fragment {
 
     private TextView background;
-    private TextView topColorYexyView;
+    private TextView topColorTextView;
     private TextView headerTextView;
     private TextView itemEditText0;
     private TextView itemEditText1;
@@ -55,7 +56,7 @@ public class SpinnerEditFragment extends Fragment {
         Data.spinnerEditFragment = this;
 
         background = rootView.findViewById(R.id.spinner_edit_fragment_background);
-        topColorYexyView = rootView.findViewById(R.id.spinner_edit_color_top);
+        topColorTextView = rootView.findViewById(R.id.spinner_edit_color_top);
         headerTextView = rootView.findViewById(R.id.spinner_edit_textview_header);
 
         itemEditText0 = rootView.findViewById(R.id.spinner_edit_fragment_edittext0);
@@ -85,14 +86,26 @@ public class SpinnerEditFragment extends Fragment {
         }
         if (dudeTypeString != null && !dudeTypeString.isEmpty()) {
             if (dudeTypeString.equalsIgnoreCase(DudeType.WHORE.toString())) {
-                topColorYexyView.setBackground(getContext().getResources().getDrawable(R.drawable.background_fragment_spinner_edit_top_whore));
-                topColorYexyView.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    topColorTextView.setBackground(getContext().getResources().getDrawable(R.drawable.background_fragment_spinner_edit_top_whore));
+                }
+                else {
+                    topColorTextView.setBackground(getContext().getResources().getDrawable(R.drawable.land_background_fragment_spinner_edit_top_whore));
+                }
+                headerTextView.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
                 background.setBackground(getResources().getDrawable(R.drawable.background_fragment_spinner_edit_whore));
                 initSpinnerItems();
                 revertItems.setTextColor(getResources().getColor(R.color.colorPrimaryMedium));
             }
             else {
-                topColorYexyView.setBackground(getContext().getResources().getDrawable(R.drawable.background_fragment_spinner_edit_top_freak));
+
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    topColorTextView.setBackground(getContext().getResources().getDrawable(R.drawable.background_fragment_spinner_edit_top_freak));
+                }
+                else {
+                    topColorTextView.setBackground(getContext().getResources().getDrawable(R.drawable.land_background_fragment_spinner_edit_top_freak));
+                }
+
                 headerTextView.setTextColor(getResources().getColor(R.color.colorBlueGrayLight));
                 background.setBackground(getResources().getDrawable(R.drawable.background_fragment_spinner_edit_freak));
                 initSpinnerItems();

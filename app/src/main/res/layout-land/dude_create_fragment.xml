@@ -76,7 +76,6 @@
         android:text="@string/button_cancel"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="4dp"
-        android:layout_marginBottom="8dp"
         android:maxLines="1"
         app:autoSizeTextType="uniform"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -93,7 +92,6 @@
         android:text="@string/button_save"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
-        android:layout_marginBottom="8dp"
         android:maxLines="1"
         app:autoSizeTextType="uniform"
         app:layout_constraintLeft_toRightOf="@id/dude_create_cancel_button"
@@ -102,49 +100,22 @@
         />
 
     <TextView
-        android:id="@+id/dude_create_color_header"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:background="@color/colorOrangeDark"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="@id/land_dude_create_guide_vertical_45"
-        app:layout_constraintTop_toBottomOf="@id/dude_create_cancel_button"
-
-        />
-
-    <TextView
-        android:id="@+id/dude_create_textview_header"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:textColor="@color/colorPrimaryLight"
-        android:textStyle="bold"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:maxLines="1"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="@id/land_dude_create_guide_vertical_45"
-        app:layout_constraintTop_toTopOf="@id/dude_create_color_header"
-        />
-
-    <TextView
         android:id="@+id/dude_create_spinner_prompt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/spinner_prompt"
-        android:layout_marginTop="12dp"
         android:paddingLeft="12dp"
         android:maxLines="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="@id/land_dude_create_guide_vertical_45"
-        app:layout_constraintTop_toBottomOf="@id/dude_create_color_header"
+        app:layout_constraintTop_toBottomOf="@id/dude_create_cancel_button"
         />
 
     <Spinner
         android:id="@+id/dude_create_spinner_property"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/land_background_spinner_item_whore"
+        android:background="@color/colorPrimaryDark"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="@id/land_dude_create_guide_vertical_45"
         app:layout_constraintTop_toBottomOf="@id/dude_create_spinner_prompt"

@@ -28,7 +28,7 @@
     <TextView
         android:id="@+id/spinner_row_textview_freak"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:textColor="@color/colorBlueGrayLight"
         android:textStyle="bold"
         android:gravity="left|center"

@@ -2,6 +2,7 @@ package com.horovod.android.whoresfreakscounterdraft;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,7 +25,8 @@ import java.util.List;
 public class SpinnerEditItemFragment extends Fragment {
 
     private TextView background;
-    private TextView topColorYexyView;
+    private TextView backgroundLeft;
+    private TextView topColorTextView;
     private TextView headerTextView;
     private EditText itemEditText;
     private TextView revertItemTextView;
@@ -47,7 +49,7 @@ public class SpinnerEditItemFragment extends Fragment {
         Data.spinnerEditItemFragment = this;
 
         background = rootView.findViewById(R.id.spinner_edit_item_fragment_background);
-        topColorYexyView = rootView.findViewById(R.id.spinner_edit_item_color_top);
+        topColorTextView = rootView.findViewById(R.id.spinner_edit_item_color_top);
         headerTextView = rootView.findViewById(R.id.spinner_edit_item_textview_header);
         itemEditText = rootView.findViewById(R.id.spinner_edit_item_fragment_edittext);
         revertItemTextView = rootView.findViewById(R.id.spinner_edit_item_fragment_revert);
@@ -69,15 +71,36 @@ public class SpinnerEditItemFragment extends Fragment {
             currentItem = args.getString(Data.KEY_SPINNER_EDIT_ITEM);
         }
 
+        // TODO Плашку colorHeader сделать без закруглений!
+
         if (dudeTypeString != null && !dudeTypeString.isEmpty()) {
             if (dudeTypeString.equalsIgnoreCase(DudeType.WHORE.toString())) {
-                topColorYexyView.setBackground(getContext().getResources().getDrawable(R.drawable.background_fragment_spinner_edit_top_whore));
-                topColorYexyView.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
+
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    topColorTextView.setBackground(getContext().getResources().getDrawable(R.drawable.background_fragment_spinner_edit_top_whore));
+                }
+                else {
+                    backgroundLeft = rootView.findViewById(R.id.spinner_edit_item_fragment_background_left);
+                    backgroundLeft.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_left_whore));
+                    topColorTextView.setBackground(getContext().getResources().getDrawable(R.drawable.land_background_fragment_spinner_edit_top_whore));
+                }
+
+
+                headerTextView.setTextColor(getResources().getColor(R.color.colorPrimaryLight));
                 background.setBackground(getResources().getDrawable(R.drawable.background_fragment_spinner_edit_whore));
                 revertItemTextView.setTextColor(getResources().getColor(R.color.colorPrimaryMedium));
             }
             else {
-                topColorYexyView.setBackground(getContext().getResources().getDrawable(R.drawable.background_fragment_spinner_edit_top_freak));
+
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    topColorTextView.setBackground(getContext().getResources().getDrawable(R.drawable.background_fragment_spinner_edit_top_freak));
+                }
+                else {
+                    backgroundLeft = rootView.findViewById(R.id.spinner_edit_item_fragment_background_left);
+                    backgroundLeft.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_left_freak));
+                    topColorTextView.setBackground(getContext().getResources().getDrawable(R.drawable.land_background_fragment_spinner_edit_top_freak));
+                }
+
                 headerTextView.setTextColor(getResources().getColor(R.color.colorBlueGrayLight));
                 background.setBackground(getResources().getDrawable(R.drawable.background_fragment_spinner_edit_freak));
                 revertItemTextView.setTextColor(getResources().getColor(R.color.colorBlueGrayPrimary));

@@ -7,7 +7,7 @@
     <TextView
         android:id="@+id/spinner_row_textview_dropdown_whore"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="44dp"
         android:textColor="@color/colorPrimaryLight"
         android:background="@color/colorPrimaryDark"
         android:paddingLeft="12dp"

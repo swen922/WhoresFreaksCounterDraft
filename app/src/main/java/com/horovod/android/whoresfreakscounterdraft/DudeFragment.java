@@ -111,7 +111,7 @@ public class DudeFragment extends Fragment {
                 else {
                     backgroundLeft = rootView.findViewById(R.id.land_dude_fragment_background_left);
                     backgroundLeft.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_left_whore));
-                    headerColor.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_top_whore));
+                    headerColor.setBackgroundColor(getResources().getColor(R.color.colorOrangeDark));
                 }
 
                 indexTextView.setBackground(getResources().getDrawable(R.drawable.background_fragment_index_whore));
@@ -131,7 +131,7 @@ public class DudeFragment extends Fragment {
                 else {
                     backgroundLeft = rootView.findViewById(R.id.land_dude_fragment_background_left);
                     backgroundLeft.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_left_freak));
-                    headerColor.setBackground(getResources().getDrawable(R.drawable.land_background_fragment_top_freak));
+                    headerColor.setBackgroundColor(getResources().getColor(R.color.colorBlueGrayDark));
                 }
 
                 indexTextView.setBackground(getResources().getDrawable(R.drawable.background_fragment_index_freak));

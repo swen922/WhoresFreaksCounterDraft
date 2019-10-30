@@ -4,11 +4,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
+import android.os.PersistableBundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,10 +20,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,9 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver clearListReceiver;
 
     private FragmentManager fragmentManager;
-
-
-    // TODO видимо, в концепции андроида правильнее читать из XML каждый раз (?)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 if (id >= 0) {
                     boolean result = Data.removeDude(id);
                     if (result) {
-                        Toast.makeText(getApplicationContext(), getString(R.string.delete_success) + " " + (size - id), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.delete_success1) + " " + (size - id) + " " + getString(R.string.delete_success2), Toast.LENGTH_LONG).show();
                         loader.writeBaseToJSON();
                         adapter.notifyDataSetChanged();
                     }
@@ -280,4 +283,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*@Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (Data.dudeFragment != null) {
+            String descr = Data.dudeFragment.getDescriptionInEditText();
+            if (descr != null && !descr.isEmpty()) {
+                Data.dudeFragment.getPromptTextView().setVisibility(View.INVISIBLE);
+            }
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }*/
 }

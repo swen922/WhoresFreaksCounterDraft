@@ -12,6 +12,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -171,7 +173,7 @@ public class CreateFragment extends Fragment {
                     }
                 });
 
-                descriptionEditText.setOnKeyListener(new View.OnKeyListener() {
+                /*descriptionEditText.setOnKeyListener(new View.OnKeyListener() {
                     @Override
                     public boolean onKey(View v, int keyCode, KeyEvent event) {
 
@@ -189,6 +191,29 @@ public class CreateFragment extends Fragment {
                         }
 
                         return false;
+                    }
+                });*/
+
+                descriptionEditText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        String descr = descriptionEditText.getText().toString();
+                        if (descr != null && !descr.isEmpty()) {
+                            infoPromptTextView.setVisibility(View.INVISIBLE);
+                        }
+                        else {
+                            infoPromptTextView.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
 
@@ -303,4 +328,16 @@ public class CreateFragment extends Fragment {
         super.onDestroy();
         getActivity().unregisterReceiver(spinnerEditReceiver);
     }
+
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        String descr = descriptionEditText.getText().toString();
+        if (descr != null && !descr.isEmpty()) {
+            infoPromptTextView.setVisibility(View.INVISIBLE);
+        }
+    }
+
+
 }

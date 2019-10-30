@@ -13,6 +13,8 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -55,11 +57,18 @@ public class DudeFragment extends Fragment {
 
     private String selectedSpinnerItem = "";
     private int selectedSpinnerPosition = 0;
-    private String shareData = "";
     private int dudeID = -1;
 
     private BroadcastReceiver spinnerEditReceiver;
 
+
+    public String getDescriptionInEditText() {
+        return descriptionEditText.getText().toString();
+    }
+
+    public TextView getPromptTextView() {
+        return promptTextView;
+    }
 
     @Nullable
     @Override
@@ -116,6 +125,7 @@ public class DudeFragment extends Fragment {
 
                 indexTextView.setBackground(getResources().getDrawable(R.drawable.background_fragment_index_whore));
                 indexTextView.setTextColor(getResources().getColor(R.color.colorOrangeDark));
+                dateTextView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 shareImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_share_24dp_red));
                 deleteImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_cancel_32dp_red));
                 initSpinner(myDude.getDudeType());
@@ -136,6 +146,7 @@ public class DudeFragment extends Fragment {
 
                 indexTextView.setBackground(getResources().getDrawable(R.drawable.background_fragment_index_freak));
                 indexTextView.setTextColor(getResources().getColor(R.color.colorBlueGrayDark));
+                dateTextView.setBackgroundColor(getResources().getColor(R.color.colorBlueGrayMedium));
                 shareImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_share_24dp_gray));
                 deleteImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_cancel_32dp_gray));
                 initSpinner(myDude.getDudeType());
@@ -157,11 +168,17 @@ public class DudeFragment extends Fragment {
                 }
             });
 
-            descriptionEditText.setOnKeyListener(new View.OnKeyListener() {
+            /*descriptionEditText.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
 
+                    //Log.i("LOGGGINGG |||||| ", "inside setOnKeyListener");
+                    //Log.i("LOGGGINGG |||||| ", "inside keyCode = " + keyCode);
+
                     if (keyCode == KeyEvent.KEYCODE_DEL) {
+
+                        //Log.i("LOGGGINGG |||||| ", "inside KeyEvent.KEYCODE_DEL");
+
                         String description = descriptionEditText.getText().toString();
                         if (description == null || description.isEmpty()) {
                             promptTextView.setVisibility(View.VISIBLE);
@@ -171,12 +188,40 @@ public class DudeFragment extends Fragment {
                         }
                     }
                     else {
+
+                        //Log.i("LOGGGINGG |||||| ", "ELSE inside keyCode = " + keyCode);
+
                         promptTextView.setVisibility(View.INVISIBLE);
                     }
 
                     return false;
                 }
+            });*/
+
+            descriptionEditText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    String descr = descriptionEditText.getText().toString();
+                    if (descr != null && !descr.isEmpty()) {
+                        promptTextView.setVisibility(View.INVISIBLE);
+                    }
+                    else {
+                        promptTextView.setVisibility(View.VISIBLE);
+                    }
+                }
             });
+
+
 
             String description = myDude.getDescription();
             if (description == null || description.isEmpty()) {
@@ -186,8 +231,6 @@ public class DudeFragment extends Fragment {
                 descriptionEditText.setText(myDude.getDescription());
                 promptTextView.setVisibility(View.INVISIBLE);
             }
-
-            shareData = getResources().getString(R.string.share_data);
 
             shareImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -203,7 +246,7 @@ public class DudeFragment extends Fragment {
                     sb.append(descriptionEditText.getText().toString());
                     intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
 
-                    startActivity(Intent.createChooser(intent, shareData));
+                    startActivity(Intent.createChooser(intent, null));
                 }
             });
 
@@ -368,5 +411,18 @@ public class DudeFragment extends Fragment {
         super.onDestroy();
         getActivity().unregisterReceiver(spinnerEditReceiver);
     }
+
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        String descr = descriptionEditText.getText().toString();
+        if (descr != null && !descr.isEmpty()) {
+            promptTextView.setVisibility(View.INVISIBLE);
+        }
+    }
+
+
+
 
 }

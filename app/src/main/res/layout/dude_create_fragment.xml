@@ -91,6 +91,7 @@
 
     <EditText
         android:id="@+id/dude_create_edittext_info"
+        android:background="@android:color/transparent"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:imeOptions = "flagNoFullscreen"
@@ -98,6 +99,7 @@
         android:inputType="textCapSentences|textMultiLine"
         android:layout_marginBottom="8dp"
         android:gravity="top"
+        android:paddingTop="12dp"
         android:paddingLeft="12dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
